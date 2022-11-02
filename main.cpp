@@ -2,12 +2,12 @@
 #include <ctime>
 #include "rlutil.h"
 #include "card.h"
-using namespace std;
-
+#include "funciones.h"
+using namespace std;;
 int main()
 {
    srand(time(NULL));
-   rlutil::hidecursor();
+    rlutil::hidecursor();
     int op = 1, y = 0;
     do{
 
@@ -44,13 +44,14 @@ int main()
             break;
         case 1: //ENTER
             switch(y){
+            case 0:
+                ronda(1);
+                break;
             case 1:
                 break;
             case 2:
                 break;
             case 3:
-                break;
-            case 4:
                 op = 0;
                 break;
 
@@ -69,7 +70,9 @@ int main()
     drawCard('4',1,40,5,'E');
     drawCard('5',2,50,5,'M');
 
-    rlutil::anykey();*/
+*/
+    rlutil::anykey();
 
     return 0;
 }
+
