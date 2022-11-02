@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1667395948 source:c:\users\jere\documents\github\card-jitsu-\card.cpp
+	<iostream>
+	"card.h"
+	"rlutil.h"
+
+1667394959 c:\users\jere\documents\github\card-jitsu-\card.h
+
+1667355224 c:\users\jere\documents\github\card-jitsu-\rlutil.h
+	<iostream>
+	<string>
+	<cstdio>
+	<stdio.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	<termios.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<sys/types.h>
+	<sys/time.h>
+
+1667395779 source:c:\users\jere\documents\github\card-jitsu-\main.cpp
+	<iostream>
+	"rlutil.h"
+	"card.h"
+
