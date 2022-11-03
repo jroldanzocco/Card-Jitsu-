@@ -52,7 +52,7 @@ void setColor(char color){
     }
 }
 
-void drawCard(char number, int type, int x, int y, char color){
+void drawCard(char number, char type, int x, int y, char color){
     setColor(color);
     box(x,y,7,5);
 
@@ -65,17 +65,17 @@ void drawCard(char number, int type, int x, int y, char color){
 
     rlutil::locate(x + 3, y + 2);
     switch(type)    {
-        case 1:
+        case 'O':
             cout << "F";
             break;
-        case 2:
+        case 'E':
             cout << "N";
             break;
-        case 3:
+        case 'A':
             cout << "A";
             break;
     }
 
 
-
+    rlutil::setColor(15);
 }
