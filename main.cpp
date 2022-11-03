@@ -46,7 +46,8 @@ int main()
         case 1: //ENTER
             switch(y+1){
             case 1:
-               ronda(1);
+                rlutil::cls();
+                ronda(1, pedirNombre());
 
                 break;
             case 2:
@@ -67,15 +68,6 @@ int main()
 
 
     }while(op != 0);
-
-/*
-    drawCard('1',1,10,5, 'Z');
-
-    drawCard('3',3,30,5,'O');
-    drawCard('4',1,40,5,'E');
-    drawCard('5',2,50,5,'M');
-
-*/
 
 
     return 0;

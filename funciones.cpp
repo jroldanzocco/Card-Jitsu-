@@ -5,8 +5,8 @@
 #include "funciones.h"
 using namespace std;
 
-void ronda(int nroRonda){
-    string mazo[60], manoJugador[60], manoCPU[60];
+void ronda(int nroRonda, string nombre){
+    string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
     crearMazo(mazo);
     mezclarMazo(mazo, 60);
     asignarCartas(mazo, manoJugador, manoCPU);
@@ -16,7 +16,7 @@ void ronda(int nroRonda){
     bool cartaRobada = false;
     rlutil::cls();
     do{
-        string cartasJugadas[2];
+
         if(!cartaRobada){
         rlutil::locate(5,5);
         cout << "VER CARTA DESAFIO" << endl;
@@ -47,12 +47,20 @@ void ronda(int nroRonda){
             switch(y+1){
             case 1:
                 rlutil::cls();
-                rlutil::locate(5,5);
+                 rlutil::locate(5,5);
                 cout << mostrarDesafio(desafioUsuario) << endl;
+                rlutil::locate(5, 10);
+                cout << "Presione una tecla para volver...";
                 rlutil::anykey();
                 rlutil::cls();
                 break;
             case 2:
+                rlutil::cls();
+                rlutil::locate(5, 4);
+                cout << "Presione una tecla para volver...";
+                dibujarCartasDisponibles(manoJugador);
+                rlutil::anykey();
+                rlutil::cls();
                 break;
             case 3:
                 rlutil::locate(5,7);
@@ -92,17 +100,32 @@ void ronda(int nroRonda){
             switch(y+1){
             case 1:
                 rlutil::cls();
+
                 rlutil::locate(5,5);
                 cout << mostrarDesafio(desafioUsuario) << endl;
+                rlutil::locate(5, 10);
+                cout << "Presione una tecla para volver...";
                 rlutil::anykey();
                 rlutil::cls();
                 break;
             case 2:
+                rlutil::cls();
+                rlutil::locate(5, 4);
+                cout << "Presione una tecla para volver...";
+                dibujarCartasDisponibles(manoJugador);
+                rlutil::anykey();
+                rlutil::cls();
                 break;
             case 3:
                 rlutil::cls();
                 eleccionCartaUsuario(manoJugador,cartasJugadas);
+                eleccionCartaCPU(manoCPU, cartasJugadas);
+                mostrarCartasJugadas(cartasJugadas,nombre);
+                condicionDeVictRonda(cartasJugadas,nombre,manoJugador,manoCPU);
+                ordenamientoDeManos(manoJugador);
+                ordenamientoDeManos(manoCPU);
                 rlutil::anykey();
+                rlutil::cls();
                 cartaRobada = false;
                 break;
             }
@@ -112,7 +135,7 @@ void ronda(int nroRonda){
 
 }
 
-void asignarDesafio(int *user, int *cpu){
+void asignarDesafio(int* user, int* cpu){
 
    do{
    *user = rand() %10+1;
@@ -163,9 +186,9 @@ void asignarCartas(string mazo[], string manoJugador[],string manoCPU[]){
     for(int i = 0; i < CARTASINICIALES; i++){
         manoJugador[i] = mazo[repartido];
         mazo[repartido] = "";
-        //manoCPU[i] = mazo[repartido + 1];
-        //mazo[repartido+1] = "";
-        //repartido+=2;
+        manoCPU[i] = mazo[repartido + 1];
+        mazo[repartido+1] = "";
+        repartido+=2;
     }
 }
 
@@ -180,7 +203,7 @@ void robarCarta(string mazo[], string manoJugador[], string manoCPU[]){
                     repartidoPlayer ++;
                 }
             }
-        }/*else if(mazo[i] != "" && repartidoCPU == 0){
+        }else if(mazo[i] != "" && repartidoCPU == 0){
             for(int j = 0; j < 60; j++){
                 if(manoCPU[j] == ""){
                     manoCPU[j] = mazo[i];
@@ -189,10 +212,9 @@ void robarCarta(string mazo[], string manoJugador[], string manoCPU[]){
                     break;
                 }
             }
-        }*/
+        }
     }
 }
-
 void eleccionCartaUsuario(string manoJugador[], string cartasJugadas[]){
     bool posiciones[8][8] = {};
     acomodarCartasEnPantalla(posiciones, manoJugador);
@@ -257,14 +279,9 @@ void eleccionCartaUsuario(string manoJugador[], string cartasJugadas[]){
             }
         break;
     case 1:  //ENTER
-        rlutil::cls();
         cartasJugadas[0] = manoJugador[eleccion];
-        //manoJugador[eleccion] = "";
-        //ordenamientoDeManos(manoJugador);
-        cout << endl << eleccion << endl;
-        drawCard(manoJugador[eleccion][0],manoJugador[eleccion].back(),15,6,manoJugador[eleccion][3]);
-        //rlutil::anykey();
-        //rlutil::cls();
+        manoJugador[eleccion] = "";
+        rlutil::cls();
         op = 1;
         break;
     }
@@ -351,6 +368,21 @@ void dibujarCartasDisponibles(string mano[]){
     }
 }
 
+void eleccionCartaCPU(string manoCPU[], string cartasJugadas[]){
+    const int limiteCartas = 60;
+    int contadorCartas = 0;
+    int jugadaRandom;
+    for(int i = 0; i < limiteCartas; i++){
+        if(manoCPU[i] != ""){
+            contadorCartas++;
+        }
+    }
+    jugadaRandom = rand() % contadorCartas;
+    cartasJugadas[1] = manoCPU[jugadaRandom];
+    manoCPU[jugadaRandom] = "";
+
+    }
+
 void ordenamientoDeManos(string manoGeneral[]){
     string auxiliar[60];
     int indiceaux = 0;
@@ -382,3 +414,67 @@ void acomodarCartasEnPantalla(bool pos[][8], string mano[]){
     }
 }
 
+string pedirNombre(){
+    string nombre = {};
+
+    do{
+        rlutil::cls();
+        rlutil::locate(5,5);
+        cout << "Ingresa tu nombre: ";
+        getline(cin, nombre);
+    }while(nombre == "");
+    return nombre;
+}
+
+void mostrarCartasJugadas(string cartasJugadas[], string nombre){
+    rlutil::cls();
+    rlutil::locate(20,3);
+    cout << nombre << " JUEGA" << endl;
+    drawCard(cartasJugadas[0][0],cartasJugadas[0].back(),21,6,cartasJugadas[0][3]);
+    rlutil::locate(60,3);
+    cout << "CPU JUEGA" << endl;
+    drawCard(cartasJugadas[1][0],cartasJugadas[1].back(),61,6,cartasJugadas[1][3]);
+}
+
+void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJugador[], string manoCPU[]){
+    rlutil::locate(25,13);
+    if(cartasJugadas[0].find("FUEGO") != std::string::npos && cartasJugadas[1].find("NIEVE") != std::string::npos){
+        ganadorDeRonda(cartasJugadas, manoJugador, 1);
+        cout << "GANA "<< nombre << " PORQUE EL FUEGO DERRITE LA NIEVE"<<  endl;
+    }else if(cartasJugadas[0].find("NIEVE") != std::string::npos && cartasJugadas[1].find("AGUA") != std::string::npos){
+        ganadorDeRonda(cartasJugadas, manoJugador, 1);
+        cout << "GANA " << nombre  << " PORQUE LA NIEVE CONGELA EL AGUA"<<  endl;
+    }else if(cartasJugadas[0].find("AGUA") != std::string::npos && cartasJugadas[1].find("FUEGO") != std::string::npos){
+        ganadorDeRonda(cartasJugadas, manoJugador, 1);
+        cout << "GANA " << nombre << " PORQUE EL AGUA APAGA EL FUEGO"<<  endl;
+    }else if(cartasJugadas[0].find("NIEVE") != std::string::npos && cartasJugadas[1].find("FUEGO") != std::string::npos){
+        ganadorDeRonda(cartasJugadas, manoCPU, 0);
+        cout << "GANA CPU" << " PORQUE EL FUEGO DERRITE LA NIEVE"<<  endl;
+    }else if(cartasJugadas[0].find("AGUA") != std::string::npos && cartasJugadas[1].find("NIEVE") != std::string::npos){
+        ganadorDeRonda(cartasJugadas, manoCPU, 0);
+        cout << "GANA CPU" << " PORQUE LA NIEVE CONGELA EL AGUA"<<  endl;
+    }else if(cartasJugadas[0].find("FUEGO") != std::string::npos && cartasJugadas[1].find("AGUA") != std::string::npos){
+        ganadorDeRonda(cartasJugadas, manoCPU, 0);
+        cout << "GANA CPU" << " PORQUE EL AGUA APAGA EL FUEGO"<<  endl;
+    }else{
+        if(cartasJugadas[0][0] > cartasJugadas[1][0]){
+            ganadorDeRonda(cartasJugadas, manoJugador, 1);
+            cout << "GANA " << nombre << " PORQUE SU NUMERO DE CARTA ES MAYOR"<<  endl;
+        }else if(cartasJugadas[0][0] < cartasJugadas[1][0]){
+            ganadorDeRonda(cartasJugadas, manoCPU, 0);
+            cout << "GANA CPU" << " PORQUE SU NUMERO DE CARTA ES MAYOR"<<  endl;
+        }else{
+            cout << "EMPATE" << " PORQUE TANTO LOS ELEMENTOS COMO LOS NUMEROS DE CARTA SON IGUALES"<<  endl;
+        }
+    }
+}
+
+void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsuario){
+    if(ganoUsuario){
+    manoGanadora[58] = cartasJugadas[0];
+    manoGanadora[59] = cartasJugadas[1];
+    }else{
+        manoGanadora[58] = cartasJugadas[1];
+        manoGanadora[59] = cartasJugadas[0];
+    }
+}
