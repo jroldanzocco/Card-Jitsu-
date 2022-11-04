@@ -68,10 +68,7 @@ void confirmarNombre(string nombre)
                 decision = 1;
                 break;
             case 1: // NO
-                decision=0;
-                rlutil::cls();
-                decision = 1;
-                confirmarNombre(solicitarNombre());
+                nombre = solicitarNombre();
                 rlutil::cls();
                 break;
             }

@@ -51,8 +51,10 @@ int main()
             switch(y+1){
             case 1:
                 rlutil::cls();
+                do{
                 nombreUsuario = solicitarNombre();
                 confirmarNombre(nombreUsuario);
+                }while(nombreUsuario == "");
                 ronda(1, nombreUsuario);
                 break;
             case 2:
