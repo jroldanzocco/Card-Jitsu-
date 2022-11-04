@@ -3,11 +3,15 @@
 #include "rlutil.h"
 #include "card.h"
 #include "funciones.h"
+#include "configFunctions.h"
 using namespace std;;
 int main()
 {
    srand(time(NULL));
     rlutil::hidecursor();
+
+    //VARIABLES
+    string nombreUsuario;
 
    int op = 1, y = 0;
     do{
@@ -47,8 +51,9 @@ int main()
             switch(y+1){
             case 1:
                 rlutil::cls();
-                ronda(1, pedirNombre());
-
+                nombreUsuario = solicitarNombre();
+                confirmarNombre(nombreUsuario);
+                ronda(1, nombreUsuario);
                 break;
             case 2:
                 break;

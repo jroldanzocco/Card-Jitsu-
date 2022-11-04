@@ -3,14 +3,15 @@
 #include "rlutil.h"
 #include "card.h"
 #include "funciones.h"
+#include "configFunctions.h"
 using namespace std;
 
 void ronda(int nroRonda, string nombre){
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
+    int desafioUsuario, desafioCPU;
     crearMazo(mazo);
     mezclarMazo(mazo, 60);
     asignarCartas(mazo, manoJugador, manoCPU);
-    int desafioUsuario, desafioCPU;
     asignarDesafio(&desafioUsuario,&desafioCPU);
     int y = 0, op = 1;
     bool cartaRobada = false;
@@ -149,7 +150,7 @@ string mostrarDesafio(int numero){
 
     string cartasDesafio[10] = {"GANAR UNA CARTA DE NIEVE.","GANAR UNA CARTA DE FUEGO.","GANAR UNA CARTA DE AGUA.",
     "GANAR DOS CARTAS ROJAS.", "GANAR DOS CARTAS AMARILLAS.","GANAR DOS CARTAS VERDES.","GANAR DOS CARTAS AZULES.",
-    "GANAR UNA CARTA CON EL MISMO ELEMENTO QUE EL ADVERSARIO.","GANAR DOS CARTAS CON EL MISMO NÚMERO.","GANAR DOS RONDAS DE MANERA CONSECUTIVA."};
+    "GANAR UNA CARTA CON EL MISMO ELEMENTO QUE EL ADVERSARIO.","GANAR DOS CARTAS CON EL MISMO NUMERO.","GANAR DOS RONDAS DE MANERA CONSECUTIVA."};
 
     return cartasDesafio[numero-1];
 }
@@ -413,19 +414,6 @@ void acomodarCartasEnPantalla(bool pos[][8], string mano[]){
         }
     }
 }
-
-string pedirNombre(){
-    string nombre = {};
-
-    do{
-        rlutil::cls();
-        rlutil::locate(5,5);
-        cout << "Ingresa tu nombre: ";
-        getline(cin, nombre);
-    }while(nombre == "");
-    return nombre;
-}
-
 void mostrarCartasJugadas(string cartasJugadas[], string nombre){
     rlutil::cls();
     rlutil::locate(20,3);

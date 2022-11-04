@@ -1,7 +1,6 @@
 #pragma once
 using  namespace std;
 
-string pedirNombre();
 void ronda(int nroRonda, string nombre);
 void asignarDesafio(int *user, int *cpu);
 string mostrarDesafio(int numero);
