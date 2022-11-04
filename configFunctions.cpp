@@ -65,12 +65,13 @@ void confirmarNombre(string nombre)
             switch(y)
             {
             case 0: // SI
-                decision=1;
+                decision = 1;
                 break;
             case 1: // NO
                 decision=0;
                 rlutil::cls();
-                solicitarNombre();
+                decision = 1;
+                confirmarNombre(solicitarNombre());
                 rlutil::cls();
                 break;
             }
@@ -79,14 +80,6 @@ void confirmarNombre(string nombre)
     }
     while(decision != 1);
     rlutil::cls();
-}
-string mostrarNombre(string nombre)
-{
-    rlutil::cls();
-    rlutil::locate(80,10);
-    cout << "Bienvenido " << nombre << "!";
-    rlutil::msleep(1000);
-    return nombre;
 }
 
 void showItem(const char* text, int posx, int posy, bool selected)

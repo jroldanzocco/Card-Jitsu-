@@ -30,7 +30,7 @@
 
 1667571994 c:\users\jere\documents\github\card-jitsu-\funciones.h
 
-1667571994 source:c:\users\jere\documents\github\card-jitsu-\funciones.cpp
+1667572780 source:c:\users\jere\documents\github\card-jitsu-\funciones.cpp
 	<iostream>
 	<ctime>
 	"rlutil.h"
@@ -38,7 +38,7 @@
 	"funciones.h"
 	"configFunctions.h"
 
-1667570154 c:\users\jere\documents\github\card-jitsu-\configfunctions.h
+1667575122 c:\users\jere\documents\github\card-jitsu-\configfunctions.h
 
 1667572615 source:c:\users\jere\documents\github\card-jitsu-\configfunctions.cpp
 	<iostream>
