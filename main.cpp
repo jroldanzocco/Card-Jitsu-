@@ -60,9 +60,14 @@ int main()
             case 2:
                 break;
             case 3:
+                rlutil::cls();
                 mostrarCreditos();
+                rlutil::cls();
                 break;
             case 4:
+                rlutil::cls();
+                reglamento();
+                rlutil::cls();
                 break;
             case 5:
                 op = 0;
