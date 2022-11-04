@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1667419377 source:c:\users\jere\documents\github\card-jitsu-\card.cpp
+1667576615 source:c:\users\jere\documents\github\card-jitsu-\card.cpp
 	<iostream>
 	"card.h"
 	"rlutil.h"
 
-1667413146 c:\users\jere\documents\github\card-jitsu-\card.h
+1667576614 c:\users\jere\documents\github\card-jitsu-\card.h
 
 1667355224 c:\users\jere\documents\github\card-jitsu-\rlutil.h
 	<iostream>
@@ -20,7 +20,7 @@
 	<sys/types.h>
 	<sys/time.h>
 
-1667575732 source:c:\users\jere\documents\github\card-jitsu-\main.cpp
+1667576724 source:c:\users\jere\documents\github\card-jitsu-\main.cpp
 	<iostream>
 	<ctime>
 	"rlutil.h"
@@ -38,9 +38,9 @@
 	"funciones.h"
 	"configFunctions.h"
 
-1667575122 c:\users\jere\documents\github\card-jitsu-\configfunctions.h
+1667576724 c:\users\jere\documents\github\card-jitsu-\configfunctions.h
 
-1667575705 source:c:\users\jere\documents\github\card-jitsu-\configfunctions.cpp
+1667590273 source:c:\users\jere\documents\github\card-jitsu-\configfunctions.cpp
 	<iostream>
 	<ctime>
 	"rlutil.h"

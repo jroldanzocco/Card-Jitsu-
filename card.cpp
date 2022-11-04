@@ -79,3 +79,20 @@ void drawCard(char number, char type, int x, int y, char color){
 
     rlutil::setColor(15);
 }
+
+void showItem(const char* text, int posx, int posy, bool selected)
+{
+    if (selected)
+    {
+        rlutil::setBackgroundColor(1);
+        rlutil::locate(posx-4,posy);
+    }
+    else
+    {
+        rlutil::setBackgroundColor(0);
+        rlutil::locate(posx-4,posy);
+    }
+    rlutil::locate(posx,posy);
+    cout<< text << endl;
+    rlutil::setBackgroundColor(0);
+}
