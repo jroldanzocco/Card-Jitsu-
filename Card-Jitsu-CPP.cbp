@@ -33,7 +33,13 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="card.cpp" />
+		<Unit filename="card.h" />
+		<Unit filename="configFunctions.cpp" />
+		<Unit filename="configFunctions.h" />
+		<Unit filename="funciones.cpp" />
+		<Unit filename="funciones.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="rlutil.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

@@ -452,6 +452,7 @@ void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJuga
             ganadorDeRonda(cartasJugadas, manoCPU, 0);
             cout << "GANA CPU" << " PORQUE SU NUMERO DE CARTA ES MAYOR"<<  endl;
         }else{
+            empate(manoJugador, manoCPU, cartasJugadas);
             cout << "EMPATE" << " PORQUE TANTO LOS ELEMENTOS COMO LOS NUMEROS DE CARTA SON IGUALES"<<  endl;
         }
     }
@@ -465,4 +466,22 @@ void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsua
         manoGanadora[58] = cartasJugadas[1];
         manoGanadora[59] = cartasJugadas[0];
     }
+}
+/*
+void juego(){
+    int nroRonda = 1;
+    string nombreUsuario;
+    do{
+        nombreUsuario = solicitarNombre();
+        confirmarNombre(nombreUsuario);
+    }while(nombreUsuario == "");
+
+    ronda(nroRonda,nombreUsuario);
+
+
+}*/
+
+void empate(string manoJugador[],string manoCPU[],string cartasJugadas[]){
+    manoJugador[58] = cartasJugadas[0];
+    manoCPU[58] = cartasJugadas[1];
 }

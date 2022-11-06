@@ -17,5 +17,5 @@ void acomodarCartasEnPantalla(bool pos[][8], string mano[]);
 void mostrarCartasJugadas(string cartasJugadas[], string nombre);
 void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJugador[], string manoCPU[]);
 void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsuario);
-
+void empate(string manoJugador[],string manoCPU[],string cartasJugadas[]);
 
