@@ -12,7 +12,7 @@ int main()
 
     //VARIABLES
     string nombreUsuario;
-
+    bool jugar = true;
    int op = 1, y = 0;
     do{
 
@@ -51,11 +51,12 @@ int main()
             switch(y+1){
             case 1:
                 rlutil::cls();
+
                 do{
                 nombreUsuario = solicitarNombre();
                 confirmarNombre(nombreUsuario);
                 }while(nombreUsuario == "");
-                ronda(1, nombreUsuario);
+                ronda(1, nombreUsuario, jugar);
                 break;
             case 2:
                 break;

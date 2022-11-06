@@ -6,12 +6,15 @@
 #include "configFunctions.h"
 using namespace std;
 
-void ronda(int nroRonda, string nombre){
+void ronda(int nroRonda, string nombre, bool jugar){
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
     int desafioUsuario, desafioCPU;
+    int contadorDesafioUsuario = 0, contadorDesafioCPU = 0;
+    char numeroDesafioNueve[5] = {};
     crearMazo(mazo);
     mezclarMazo(mazo, 60);
     asignarCartas(mazo, manoJugador, manoCPU);
+
     asignarDesafio(&desafioUsuario,&desafioCPU);
     int y = 0, op = 1;
     bool cartaRobada = false;
@@ -123,8 +126,13 @@ void ronda(int nroRonda, string nombre){
                 eleccionCartaCPU(manoCPU, cartasJugadas);
                 mostrarCartasJugadas(cartasJugadas,nombre);
                 condicionDeVictRonda(cartasJugadas,nombre,manoJugador,manoCPU);
+                victDesafio(desafioUsuario,manoJugador, &contadorDesafioUsuario, numeroDesafioNueve);
+                victDesafio(desafioCPU,manoCPU, &contadorDesafioCPU, numeroDesafioNueve);
                 ordenamientoDeManos(manoJugador);
                 ordenamientoDeManos(manoCPU);
+                if(contadorDesafioUsuario == 2){
+                    jugar = false;
+                }
                 rlutil::anykey();
                 rlutil::cls();
                 cartaRobada = false;
@@ -132,7 +140,7 @@ void ronda(int nroRonda, string nombre){
             }
         }
    }
-    }while(op == 1);
+    }while(jugar);
 
 }
 
@@ -484,4 +492,111 @@ void juego(){
 void empate(string manoJugador[],string manoCPU[],string cartasJugadas[]){
     manoJugador[58] = cartasJugadas[0];
     manoCPU[58] = cartasJugadas[1];
+}
+
+void victDesafio(int desafio, string mano[], int *completarDesafio, char numeroConsecutivo[]){
+    int numActual = (int)mano[59][0] - 49;
+    switch(desafio){
+    case 1:
+        if (mano[59].find("NIEVE") != std::string::npos){
+            *completarDesafio = 2;
+        }
+        break;
+    case 2:
+        if (mano[59].find("FUEGO") != std::string::npos){
+            *completarDesafio = 2;
+        }
+        break;
+    case 3:
+        if (mano[59].find("AGUA") != std::string::npos){
+            *completarDesafio = 2;
+        }
+        break;
+    case 4:
+        switch(*completarDesafio){
+        case 0:
+            if(mano[59][3] == 'O'){
+                *completarDesafio = 1;
+            }
+            break;
+        case 1:
+            if(mano[59][3] == 'O'){
+                *completarDesafio = 2;
+            }
+            break;
+        }
+        break;
+    case 5:
+        switch(*completarDesafio){
+        case 0:
+            if(mano[59][3] == 'M'){
+                *completarDesafio = 1;
+            }
+            break;
+        case 1:
+            if(mano[59][3] == 'M'){
+                *completarDesafio = 2;
+            }
+            break;
+        }
+        break;
+    case 6:
+         switch(*completarDesafio){
+        case 0:
+            if(mano[59][3] == 'E'){
+                *completarDesafio = 1;
+            }
+            break;
+        case 1:
+            if(mano[59][3] == 'E'){
+                *completarDesafio = 2;
+            }
+            break;
+        }
+        break;
+    case 7:
+         switch(*completarDesafio){
+        case 0:
+            if(mano[59][3] == 'Z'){
+                *completarDesafio = 1;
+            }
+            break;
+        case 1:
+            if(mano[59][3] == 'Z'){
+                *completarDesafio = 2;
+            }
+            break;
+        }
+        break;
+    case 8:
+        if (mano[58] != "" && mano[58].back() == mano[59].back()){
+            *completarDesafio = 2;
+        }
+        break;
+    case 9:
+            if(mano[59] != ""){
+                if(numeroConsecutivo[numActual] == '\0'){
+                    numeroConsecutivo[numActual] = mano[59][0];
+                }else{
+                    *completarDesafio = 2;
+                }
+            }
+        break;
+    case 10:
+        switch(*completarDesafio){
+        case 0:
+            if(mano[59] != ""){
+                *completarDesafio = 1;
+            }
+            break;
+        case 1:
+            if(mano[59] != ""){
+                *completarDesafio = 2;
+            }else{
+                *completarDesafio = 0;
+            }
+            break;
+        }
+        break;
+    }
 }
