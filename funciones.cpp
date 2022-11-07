@@ -8,14 +8,13 @@ using namespace std;
 
 void ronda(int nroRonda, string nombre, bool jugar){
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
-    int desafioUsuario, desafioCPU;
+    int desafioUsuario = asignarDesafio(0);
+    int desafioCPU = asignarDesafio(desafioUsuario);
     int contadorDesafioUsuario = 0, contadorDesafioCPU = 0;
     char numeroDesafioNueve[5] = {};
     crearMazo(mazo);
     mezclarMazo(mazo, 60);
     asignarCartas(mazo, manoJugador, manoCPU);
-
-    asignarDesafio(&desafioUsuario,&desafioCPU);
     int y = 0, op = 1;
     bool cartaRobada = false;
     rlutil::cls();
@@ -144,14 +143,12 @@ void ronda(int nroRonda, string nombre, bool jugar){
 
 }
 
-void asignarDesafio(int* user, int* cpu){
-
+int asignarDesafio(int desafioAnterior){
+    int desafio;
    do{
-   *user = rand() %10+1;
-   *cpu = rand()%10+1;
-
-   }while(*user == *cpu);
-
+   desafio = rand() % 10+1;
+   }while(desafio == desafioAnterior);
+    return desafio;
 }
 
 string mostrarDesafio(int numero){

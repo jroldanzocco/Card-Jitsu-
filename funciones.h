@@ -2,7 +2,7 @@
 using  namespace std;
 
 void ronda(int nroRonda, string nombre, bool jugar);
-void asignarDesafio(int *user, int *cpu);
+int asignarDesafio(int desafioAnterior);
 string mostrarDesafio(int numero);
 void crearMazo(string mazo[]);
 void mezclarMazo(string mazo[], int cantidadCartas);
