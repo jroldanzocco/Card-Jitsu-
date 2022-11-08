@@ -6,15 +6,22 @@
 #include "configFunctions.h"
 using namespace std;
 
+
 void ronda(int nroRonda, string nombre){
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
+    bool ganadorDesafioCPU=false, ganadorDesafioJugador=false;
+    string ganadorPartida=" ";
     int desafioUsuario, desafioCPU;
+     int vEstadisticasCPU[5]={};
+     int vEstadisticasJugador[5]={};
     crearMazo(mazo);
     mezclarMazo(mazo, 60);
     asignarCartas(mazo, manoJugador, manoCPU);
     asignarDesafio(&desafioUsuario,&desafioCPU);
     int y = 0, op = 1;
     bool cartaRobada = false;
+    bool ganadorElementosCPU=false;
+    bool ganadorElementosJugador=false;
     rlutil::cls();
     do{
 
@@ -122,7 +129,9 @@ void ronda(int nroRonda, string nombre){
                 eleccionCartaUsuario(manoJugador,cartasJugadas);
                 eleccionCartaCPU(manoCPU, cartasJugadas);
                 mostrarCartasJugadas(cartasJugadas,nombre);
-                condicionDeVictRonda(cartasJugadas,nombre,manoJugador,manoCPU);
+                condicionDeVictRonda(cartasJugadas,nombre,manoJugador,manoCPU, vEstadisticasCPU, vEstadisticasJugador);
+                verificarCondicionElementos(nombre, manoJugador,manoCPU, vEstadisticasCPU,vEstadisticasJugador,ganadorElementosCPU, ganadorElementosJugador);
+                mostrarGanador (ganadorDesafioJugador,ganadorDesafioCPU, ganadorElementosJugador, ganadorElementosCPU, nombre, ganadorPartida, vEstadisticasCPU,  vEstadisticasJugador);
                 ordenamientoDeManos(manoJugador);
                 ordenamientoDeManos(manoCPU);
                 rlutil::anykey();
@@ -424,32 +433,32 @@ void mostrarCartasJugadas(string cartasJugadas[], string nombre){
     drawCard(cartasJugadas[1][0],cartasJugadas[1].back(),61,6,cartasJugadas[1][3]);
 }
 
-void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJugador[], string manoCPU[]){
+void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJugador[], string manoCPU[], int vEstadisticasCPU[],int vEstadisticasJugador[]){
     rlutil::locate(25,13);
     if(cartasJugadas[0].find("FUEGO") != std::string::npos && cartasJugadas[1].find("NIEVE") != std::string::npos){
-        ganadorDeRonda(cartasJugadas, manoJugador, 1);
+        ganadorDeRonda(cartasJugadas, manoJugador, 1,vEstadisticasJugador);
         cout << "GANA "<< nombre << " PORQUE EL FUEGO DERRITE LA NIEVE"<<  endl;
     }else if(cartasJugadas[0].find("NIEVE") != std::string::npos && cartasJugadas[1].find("AGUA") != std::string::npos){
-        ganadorDeRonda(cartasJugadas, manoJugador, 1);
+        ganadorDeRonda(cartasJugadas, manoJugador, 1, vEstadisticasJugador);
         cout << "GANA " << nombre  << " PORQUE LA NIEVE CONGELA EL AGUA"<<  endl;
     }else if(cartasJugadas[0].find("AGUA") != std::string::npos && cartasJugadas[1].find("FUEGO") != std::string::npos){
-        ganadorDeRonda(cartasJugadas, manoJugador, 1);
+        ganadorDeRonda(cartasJugadas, manoJugador, 1, vEstadisticasJugador);
         cout << "GANA " << nombre << " PORQUE EL AGUA APAGA EL FUEGO"<<  endl;
     }else if(cartasJugadas[0].find("NIEVE") != std::string::npos && cartasJugadas[1].find("FUEGO") != std::string::npos){
-        ganadorDeRonda(cartasJugadas, manoCPU, 0);
+        ganadorDeRonda(cartasJugadas, manoCPU, 0,vEstadisticasCPU);
         cout << "GANA CPU" << " PORQUE EL FUEGO DERRITE LA NIEVE"<<  endl;
     }else if(cartasJugadas[0].find("AGUA") != std::string::npos && cartasJugadas[1].find("NIEVE") != std::string::npos){
-        ganadorDeRonda(cartasJugadas, manoCPU, 0);
+        ganadorDeRonda(cartasJugadas, manoCPU, 0,vEstadisticasCPU);
         cout << "GANA CPU" << " PORQUE LA NIEVE CONGELA EL AGUA"<<  endl;
     }else if(cartasJugadas[0].find("FUEGO") != std::string::npos && cartasJugadas[1].find("AGUA") != std::string::npos){
-        ganadorDeRonda(cartasJugadas, manoCPU, 0);
+        ganadorDeRonda(cartasJugadas, manoCPU, 0,vEstadisticasCPU);
         cout << "GANA CPU" << " PORQUE EL AGUA APAGA EL FUEGO"<<  endl;
     }else{
         if(cartasJugadas[0][0] > cartasJugadas[1][0]){
-            ganadorDeRonda(cartasJugadas, manoJugador, 1);
+            ganadorDeRonda(cartasJugadas, manoJugador, 1,vEstadisticasJugador);
             cout << "GANA " << nombre << " PORQUE SU NUMERO DE CARTA ES MAYOR"<<  endl;
         }else if(cartasJugadas[0][0] < cartasJugadas[1][0]){
-            ganadorDeRonda(cartasJugadas, manoCPU, 0);
+            ganadorDeRonda(cartasJugadas, manoCPU, 0,vEstadisticasCPU);
             cout << "GANA CPU" << " PORQUE SU NUMERO DE CARTA ES MAYOR"<<  endl;
         }else{
             cout << "EMPATE" << " PORQUE TANTO LOS ELEMENTOS COMO LOS NUMEROS DE CARTA SON IGUALES"<<  endl;
@@ -457,12 +466,241 @@ void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJuga
     }
 }
 
-void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsuario){
+void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsuario, int vEstadisticas[]){
     if(ganoUsuario){
     manoGanadora[58] = cartasJugadas[0];
     manoGanadora[59] = cartasJugadas[1];
+    vEstadisticas[3]+=1;
     }else{
         manoGanadora[58] = cartasJugadas[1];
         manoGanadora[59] = cartasJugadas[0];
+    vEstadisticas[3]+=1;
     }
 }
+void verificarCondicionElementos(string nombre, string vCartasJugador[],string vCartasCPU[], int vEstadisticasCPU[],int vEstadisticasJugador[],bool &ganadorElementosCPU, bool &ganadorElementosJugador)
+{
+    int x,i;
+    int contadorColorRojo=0;
+    int contadorColorAmarillo=0;
+    int contadorColorAzul=0;
+    int contadorColorVerde=0;
+    int contadorElementoFuego=0;
+    int contadorElementoAgua=0;
+    int contadorElementoNieve=0;
+    bool combinacionGanadora=false;
+
+
+
+    for (x=0; x<60; x++)
+    {
+        if (vCartasJugador[x]!=" " )
+        {
+            if (vCartasJugador[x].find("fuego")!=string::npos)
+            {
+                contadorElementoFuego+=1;
+            }
+            else if (vCartasJugador[x].find("agua")!=string::npos)
+            {
+                contadorElementoAgua+=1;
+
+            }
+            else if (vCartasJugador[x].find("nieve")!=string::npos)
+            {
+                contadorElementoNieve+=1;
+            }
+
+
+            if (vCartasJugador[x].find("verde")!=string::npos)
+            {
+                contadorColorVerde+=1;
+            }
+            else if (vCartasJugador[x].find("amarillo")!=string::npos)
+            {
+                contadorColorAmarillo+=1;
+
+            }
+            else if (vCartasJugador[x].find("azul")!=string::npos)
+            {
+                contadorColorAzul+=1;
+            }
+            else if (vCartasJugador[x].find("rojo")!=string::npos)
+            {
+                contadorColorRojo+=1;
+            }
+
+        }
+
+    }
+    if (contadorColorAzul==1 && contadorColorAmarillo==1 && contadorColorRojo==1 || contadorColorAmarillo==1 && contadorColorRojo==1 && contadorColorVerde==1 ||contadorColorVerde==1 && contadorColorRojo==1 && contadorColorAzul==1 || contadorColorVerde==1 && contadorColorAmarillo==1 && contadorColorAzul==1 && contadorElementoAgua==1 && contadorElementoFuego==1 && contadorElementoNieve==1)
+    {
+        cout<< "FELICIDADES "<<nombre<< " OBTUVISTE UNA COMBINACION DE ELEMENTOS GANADORA"<< endl;
+        vEstadisticasCPU[1]-=1;
+
+        ganadorElementosJugador=true;
+
+
+    }
+    else
+    {
+        if (contadorElementoAgua==3 || contadorElementoFuego==3 || contadorElementoNieve==3)
+        {
+
+            cout<< "FELICIDADES "<<nombre<< " OBTUVISTE UNA COMBINACION DE ELEMENTOS GANADORA"<< endl;
+            vEstadisticasCPU[1]-=1;
+
+            ganadorElementosJugador=true;
+
+        }
+    }
+
+
+    contadorColorRojo=0;
+    contadorColorAmarillo=0;
+    contadorColorAzul=0;
+    contadorColorVerde=0;
+    contadorElementoFuego=0;
+    contadorElementoAgua=0;
+    contadorElementoNieve=0;
+
+    for (x=0; x<60; x++)
+    {
+        if (vCartasCPU[x]!=" " )
+        {
+            if (vCartasCPU[x].find("fuego")!=string::npos)
+            {
+                contadorElementoFuego+=1;
+            }
+            else if (vCartasCPU[x].find("agua")!=string::npos)
+            {
+                contadorElementoAgua+=1;
+
+            }
+            else if (vCartasCPU[x].find("nieve")!=string::npos)
+            {
+                contadorElementoNieve+=1;
+
+            }
+
+
+            else if (vCartasCPU[x].find("verde")!=string::npos)
+            {
+                contadorColorVerde+=1;
+            }
+            else if (vCartasCPU[x].find("amarillo")!=string::npos)
+            {
+                contadorColorAmarillo+=1;
+
+            }
+            else if (vCartasCPU[x].find("azul")!=string::npos)
+            {
+                contadorColorAzul+=1;
+            }
+            else if (vCartasCPU[x].find("rojo")!=string::npos)
+            {
+                contadorColorRojo+=1;
+            }
+        }
+
+    }
+    if (contadorColorAzul==1 && contadorColorAmarillo==1 && contadorColorRojo==1 || contadorColorAmarillo==1 && contadorColorRojo==1 && contadorColorVerde==1 ||contadorColorVerde==1 && contadorColorRojo==1 && contadorColorAzul==1 || contadorColorVerde==1 && contadorColorAmarillo==1 && contadorColorAzul==1 && contadorElementoAgua==1 && contadorElementoFuego==1 && contadorElementoNieve==1)
+    {
+
+        cout<< "CPU OBTUVO UNA COMBINACION DE ELEMENTOS GANADORA"<< endl;
+        vEstadisticasJugador[1]-=1;
+        ganadorElementosCPU=true;
+    }
+    else
+    {
+        if (contadorElementoAgua==3 || contadorElementoFuego==3 || contadorElementoNieve==3)
+        {
+
+            cout<< "CPU OBTUVO UNA COMBINACION DE ELEMENTOS GANADORA"<< endl;
+            vEstadisticasJugador[1]-=1;
+
+            ganadorElementosCPU=true;
+
+        }
+    }
+
+}
+
+void mostrarEstadisticas (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string &ganadorPartida)
+{
+    int i;
+    int acumulador;
+    int acumuladorPuntosJugador=0;
+    int acumuladorPuntosCPU=0;
+    if (ganadorPartida=="JUGADOR")
+    {
+        for (i=0; i<5; i++)
+        {
+
+            acumulador= vEstadisticasJugador[i];
+            acumuladorPuntosJugador+=acumulador;
+
+        }
+        cout << "HITO "<<endl;
+        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+        cout << "GANADOR DE LA PARTIDA                                           " << vEstadisticasJugador[0]<< " PDV"<<endl;
+        cout << "COMBINACION DE ELEMENTOS CUMPLIDOS POR EL CONTRARIO             " << vEstadisticasJugador[1]<< " PDV"<<endl;
+        cout << "CARTA DESAFIO CUMPLIDO POR EL CONTRARIO                         " << vEstadisticasJugador[2]<< " PDV "<<endl;
+        cout << "RONDAS GANADAS AL ADVERSARIO                                    " << vEstadisticasJugador[3]<< " PDV "<<endl;
+        cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasJugador[4]<< " PDV "<<endl;
+        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+        cout << "TOTAL                                                             "<< acumuladorPuntosJugador<<" PDV"<<endl;
+
+
+        cout<< "GANADOR "<< nombre << " CON "<< acumuladorPuntosJugador<< " PUNTOS DE VICTORIA "<<endl;
+
+    }
+
+    else if (ganadorPartida=="CPU")
+    {
+
+        for (i=0; i<5; i++)
+        {
+            acumulador= vEstadisticasCPU[i];
+            acumuladorPuntosCPU+=acumulador;
+
+
+        }
+        cout << "HITO "<<endl;
+        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+        cout << "GANADOR DE LA PARTIDA                                           " << vEstadisticasCPU[0]<< " PDV"<<endl;
+        cout << "COMBINACION DE ELEMENTOS CUMPLIDOS POR EL CONTRARIO             " << vEstadisticasCPU[1]<< " PDV"<<endl;
+        cout << "CARTA DESAFIO CUMPLIDO POR EL CONTRARIO                         " << vEstadisticasCPU[2]<< " PDV "<<endl;
+        cout << "RONDAS GANADAS AL ADVERSARIO                                    " << vEstadisticasCPU[3]<< " PDV "<<endl;
+        cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasCPU[4]<< " PDV "<<endl;
+        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+        cout << "TOTAL                                                           "<< acumuladorPuntosCPU<<" PDV"<<endl;
+
+
+        cout<< "GANADOR CPU CON "<< acumuladorPuntosCPU<< " PUNTOS DE VICTORIA "<<endl;
+    }
+
+}
+
+void mostrarGanador (bool &ganadorDesafioJugador, bool &ganadorDesafioCPU, bool &ganadorElementosJugador, bool &ganadorElementosCPU, string nombre, string &ganadorPartida, int vEstadisticasCPU[], int vEstadisticasJugador[])
+{
+
+    if (ganadorDesafioCPU==true && ganadorElementosCPU==true)
+    {
+        cout << "CPU GANO LA PARTIDA"<< endl;
+        vEstadisticasCPU[0]+=3;
+        ganadorPartida="CPU";
+        mostrarEstadisticas ( nombre, vEstadisticasJugador,vEstadisticasCPU, ganadorPartida);
+    }
+
+
+    else if (ganadorDesafioJugador==true && ganadorElementosJugador==true)
+    {
+        cout << "FELICIDADES"<< nombre<< " GANASTE LA PARTIDA"<< endl;
+        vEstadisticasJugador[0]+=3;
+        ganadorPartida=nombre;
+        mostrarEstadisticas (nombre, vEstadisticasJugador, vEstadisticasCPU, ganadorPartida);
+
+    }
+
+}
+
+
