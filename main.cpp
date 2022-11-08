@@ -14,25 +14,33 @@ int main()
     string nombreUsuario;
 
    int op = 1, y = 0;
+   logo();
     do{
 
 
-        rlutil::locate(5,5);
-        cout << "JUGAR" << endl;
-        rlutil::locate(5,6);
-        cout << "ESTADISTICAS" << endl;
-        rlutil::locate(5,7);
-        cout << "CREDITOS" << endl;
-        rlutil::locate(5,8);
-        cout << "REGLAS DEL JUEGO" << endl;
-        rlutil::locate(5,9);
-        cout << "SALIR" << endl;
-        rlutil::locate(3,5+y);
-        cout << (char)175 << endl;
+       rlutil::setBackgroundColor(rlutil::BLACK);
+
+
+        rlutil::setColor(rlutil::DARKGREY);
+        rlutil::locate(40,10 );
+        std::cout<< " JUGAR"<<std::endl;
+        rlutil::locate(40,11);
+        std::cout<< " ESTADISTICAS"<<std::endl;
+        rlutil::locate(40,12);
+        std::cout<< " CREDITOS "<<std::endl;
+        rlutil::locate(40,13);
+        std::cout<< " REGLAS DEL JUEGO"<<std::endl;
+        rlutil::locate(40,14 );
+        std::cout << " SALIR"<< std::endl;
+
+        rlutil::setColor(rlutil::WHITE);
+
+        rlutil::locate(38,10+y);
+        std::cout<<(char)175<< std::endl;
 
         switch(rlutil::getkey()){
         case 14: //UP
-            rlutil::locate(3,5+y);
+            rlutil::locate(38,10+y);
             cout << " " << endl;
             y--;
             if(y < 0){
@@ -40,7 +48,7 @@ int main()
             }
             break;
         case 15: //DOWN
-            rlutil::locate(3,5+y);
+            rlutil::locate(38,10+y);
             cout << " " << endl;
             y++;
             if(y > 4){
