@@ -8,10 +8,8 @@ using namespace std;
 
 void ronda(int nroRonda, string nombre, bool jugar){
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
-    int desafioUsuario = 1;
-    int desafioCPU = 10;
-   // int desafioUsuario = asignarDesafio(0);
-    //int desafioCPU = asignarDesafio(desafioUsuario);
+   int desafioUsuario = asignarDesafio(0);
+   int desafioCPU = asignarDesafio(desafioUsuario);
 
     //
     string ganadorPartida;
