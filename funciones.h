@@ -18,7 +18,7 @@ void mostrarCartasJugadas(string cartasJugadas[], string nombre);
 void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJugador[], string manoCPU[], int vEstadisticasCPU[],int vEstadisticasJugador[]);
 void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsuario, int vEstadisticas[]);
 void empate(string manoJugador[],string manoCPU[],string cartasJugadas[]);
-void victDesafio(int desafio, string mano[], int *completarDesafio, char numeroConsecutivo[], int vEstadisticas[]);
+void victDesafio(int desafio, string mano[], int completarDesafio[], char numeroConsecutivo[], int vEstadisticas[]);
 
 void mostrarGanador (bool ganadorDesafioJugador, bool ganadorDesafioCPU, bool ganadorElementosJugador, bool ganadorElementosCPU, string nombre, string &ganadorPartida, int vEstadisticasCPU[], int vEstadisticasJugador[]);
 void mostrarEstadisticas (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string ganadorPartida);

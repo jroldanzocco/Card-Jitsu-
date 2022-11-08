@@ -28,9 +28,9 @@
 	"funciones.h"
 	"configFunctions.h"
 
-1667921828 c:\users\jere\documents\github\card-jitsu-\funciones.h
+1667929514 c:\users\jere\documents\github\card-jitsu-\funciones.h
 
-1667918691 source:c:\users\jere\documents\github\card-jitsu-\funciones.cpp
+1667929728 source:c:\users\jere\documents\github\card-jitsu-\funciones.cpp
 	<iostream>
 	<ctime>
 	"rlutil.h"
