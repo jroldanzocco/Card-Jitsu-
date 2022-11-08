@@ -23,7 +23,7 @@ void victDesafio(int desafio, string mano[], int completarDesafio[], char numero
 void mostrarGanador (bool ganadorDesafioJugador, bool ganadorDesafioCPU, bool ganadorElementosJugador, bool ganadorElementosCPU, string nombre, string &ganadorPartida, int vEstadisticasCPU[], int vEstadisticasJugador[]);
 void mostrarEstadisticas (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string ganadorPartida);
 
-bool combinacionGanadora(string mano[], int vEstadisticas[]);
+bool combinacionGanadora(string mano[]);
 string devolverElemento(string carta);
 string devolverColor(string carta);
 bool hayTresColores(string mano[], int tam);

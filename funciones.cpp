@@ -144,8 +144,8 @@ void ronda(int nroRonda, string nombre, bool jugar){
                 victDesafio(desafioCPU,manoCPU, contadorDesafioCPU, numeroDesafioNueve, vEstadisticasJugador);
                 ordenamientoDeManos(manoJugador);
                 ordenamientoDeManos(manoCPU);
-                ganadorElementosJugador = combinacionGanadora(manoJugador,vEstadisticasCPU);
-                ganadorElementosCPU = combinacionGanadora(manoCPU, vEstadisticasJugador);
+                ganadorElementosJugador = combinacionGanadora(manoJugador);
+                ganadorElementosCPU = combinacionGanadora(manoCPU);
                 if(contadorDesafioUsuario[0] == true && contadorDesafioUsuario[1] == true){
                     ganadorDesafioJugador = true;
                     vEstadisticasCPU[2]-=1;
@@ -154,9 +154,14 @@ void ronda(int nroRonda, string nombre, bool jugar){
                     ganadorDesafioCPU = true;
                     vEstadisticasJugador[2]-=1;
                 }
+
+                if(combinacionGanadora(manoCPU)){
+                    vEstadisticasJugador[1]-=1;
+                }
+                if(combinacionGanadora(manoJugador)){
+                    vEstadisticasCPU[1]-=1;
+                }
                 rlutil::anykey();
-
-
                 if((ganadorDesafioJugador && ganadorElementosJugador) || (ganadorDesafioCPU && ganadorElementosCPU)){
 
                 jugar = false;
@@ -611,7 +616,7 @@ void victDesafio(int desafio, string mano[], int completarDesafio[], char numero
 
 }
 //Mismo que desafio, se pasan como parametro las estadisticas contrarias
-bool combinacionGanadora(string mano[], int vEstadisticas[]){
+bool combinacionGanadora(string mano[]){
     //Tener tres cartas del mismo elemento
     int fuego = 0, nieve = 0, agua = 0;
     int i = 0;
@@ -626,12 +631,11 @@ bool combinacionGanadora(string mano[], int vEstadisticas[]){
         i++;
     }
     if(fuego >= 3 || nieve >= 3 || agua >= 3){
-        vEstadisticas[1]-=1;
+
         return true;
     }
     //Tener tres cartas de distinto elemento y distinto color.
     if(fuego >= 1 && nieve >= 1 && agua >= 1 && hayTresColores(mano, i)){
-        vEstadisticas[1]-=1;
         return true;
     }
     return false;
