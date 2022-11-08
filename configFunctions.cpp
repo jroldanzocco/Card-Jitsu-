@@ -279,3 +279,98 @@ void reglamento()
             }
         }
 
+//FUNCIONES FIORE
+
+//ESTADISTICAS Y GANADOR
+/*
+    bool ganadorDesafioCPU;
+    bool ganadorDesafioJugador;
+    bool ganadorElementosCPU;
+    bool ganadorElementosJugador;
+    string ganadorPartida;
+    int vEstadisticasJugador[5];
+    int vEstadisticasCPU[5];
+void mostrarEstadisticas (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string &ganadorPartida)
+{
+    int i;
+    int acumulador;
+    int acumuladorPuntosJugador=0;
+    int acumuladorPuntosCPU=0;
+    if (ganadorPartida=="JUGADOR")
+    {
+        for (i=0; i<5; i++)
+        {
+
+            acumulador= vEstadisticasJugador[i];
+            acumuladorPuntosJugador+=acumulador;
+
+        }
+        cout << "HITO "<<endl;
+        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+        cout << "GANADOR DE LA PARTIDA                                           " << vEstadisticasJugador[0]<< " PDV"<<endl;
+        cout << "COMBINACION DE ELEMENTOS CUMPLIDOS POR EL CONTRARIO             " << vEstadisticasJugador[1]<< " PDV"<<endl;
+        cout << "CARTA DESAFIO CUMPLIDO POR EL CONTRARIO                         " << vEstadisticasJugador[2]<< " PDV "<<endl;
+        cout << "RONDAS GANADAS AL ADVERSARIO                                    " << vEstadisticasJugador[3]<< " PDV "<<endl;
+        cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasJugador[4]<< " PDV "<<endl;
+        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+        cout << "TOTAL                                                             "<< acumuladorPuntosJugador<<" PDV"<<endl;
+
+
+        cout<< "GANADOR "<< nombre << " CON "<< acumuladorPuntosJugador<< " PUNTOS DE VICTORIA "<<endl;
+
+    }
+
+    else if (ganadorPartida=="CPU")
+    {
+
+        for (i=0; i<5; i++)
+        {
+            acumulador= vEstadisticasCPU[i];
+            acumuladorPuntosCPU+=acumulador;
+
+
+        }
+        cout << "HITO "<<endl;
+        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+        cout << "GANADOR DE LA PARTIDA                                           " << vEstadisticasCPU[0]<< " PDV"<<endl;
+        cout << "COMBINACION DE ELEMENTOS CUMPLIDOS POR EL CONTRARIO             " << vEstadisticasCPU[1]<< " PDV"<<endl;
+        cout << "CARTA DESAFIO CUMPLIDO POR EL CONTRARIO                         " << vEstadisticasCPU[2]<< " PDV "<<endl;
+        cout << "RONDAS GANADAS AL ADVERSARIO                                    " << vEstadisticasCPU[3]<< " PDV "<<endl;
+        cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasCPU[4]<< " PDV "<<endl;
+        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+        cout << "TOTAL                                                           "<< acumuladorPuntosCPU<<" PDV"<<endl;
+
+
+        cout<< "GANADOR CPU CON "<< acumuladorPuntosCPU<< " PUNTOS DE VICTORIA "<<endl;
+    }
+
+}
+
+
+
+string mostrarGanador (bool &ganadorDesafioJugador, bool &ganadorDesafioCPU, bool &ganadorElementosJugador, bool &ganadorElementosCPU, string nombre, string ganadorPartida, int vEstadisticasCPU[], int vEstadisticasJugador[])
+{
+
+    if (ganadorDesafioCPU==true && ganadorElementosCPU==true)
+    {
+        cout << "CPU GANO LA PARTIDA"<< endl;
+        vEstadisticasCPU[0]+=3;
+        ganadorPartida="CPU";
+        mostrarEstadisticas ( nombre, vEstadisticasJugador,vEstadisticasCPU, ganadorPartida);
+    }
+
+
+    else if (ganadorDesafioJugador==true && ganadorElementosJugador==true)
+    {
+        cout << "FELICIDADES"<< nombre<< " GANASTE LA PARTIDA"<< endl;
+        vEstadisticasJugador[0]+=3;
+        ganadorPartida=nombre;
+        mostrarEstadisticas (nombre, vEstadisticasJugador, vEstadisticasCPU, ganadorPartida);
+
+    }
+
+    return ganadorPartida;
+}
+
+
+*/

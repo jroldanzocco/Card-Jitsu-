@@ -129,7 +129,7 @@ void ronda(int nroRonda, string nombre, bool jugar){
                 victDesafio(desafioCPU,manoCPU, &contadorDesafioCPU, numeroDesafioNueve);
                 ordenamientoDeManos(manoJugador);
                 ordenamientoDeManos(manoCPU);
-                if(contadorDesafioUsuario == 2){
+                if(contadorDesafioUsuario == 2 && combinacionGanadora(manoJugador)){
                     jugar = false;
                 }
                 rlutil::anykey();
@@ -597,3 +597,90 @@ void victDesafio(int desafio, string mano[], int *completarDesafio, char numeroC
         break;
     }
 }
+
+bool combinacionGanadora(string mano[]){
+    //Tener tres cartas del mismo elemento
+    int fuego = 0, nieve = 0, agua = 0;
+    int i = 0;
+    while(mano[i] != ""){
+        if(devolverElemento(mano[i]) == "FUEGO"){
+            fuego++;
+        }else if(devolverElemento(mano[i]) == "NIEVE"){
+            nieve++;
+        }else if(devolverElemento(mano[i]) == "AGUA"){
+            agua++;
+        }
+        i++;
+    }
+    if(fuego >= 3 || nieve >= 3 || agua >= 3){
+        return true;
+    }
+    //Tener tres cartas de distinto elemento y distinto color.
+    if(fuego >= 1 && nieve >= 1 && agua >= 1 && hayTresColores(mano, i)){
+        return true;
+    }
+    return false;
+}
+
+
+
+string devolverElemento(string carta){
+    string elemento;
+    if(carta.find("FUEGO") != std::string::npos){
+        elemento = "FUEGO";
+    }else if(carta.find("NIEVE") != std::string::npos){
+        elemento = "NIEVE";
+    }else if(carta.find("AGUA") != std::string::npos){
+        elemento = "AGUA";
+    }
+    return elemento;
+}
+
+
+string devolverColor(string carta){
+    string color;
+    if(carta.find("AMARILLO") != std::string::npos){
+        color = "AMARILLO";
+    }else if(carta.find("AZUL") != std::string::npos){
+        color = "AZUL";
+    }else if(carta.find("VERDE") != std::string::npos){
+        color = "VERDE";
+    }else if(carta.find("ROJO") != std::string::npos){
+        color = "ROJO";
+    }
+
+}
+
+bool hayTresColores(string mano[], int tam){
+    int contadorColorRojo=0;
+    int contadorColorAmarillo=0;
+    int contadorColorAzul=0;
+    int contadorColorVerde=0;
+    for(int i = 0; i < tam; i++){
+     if (devolverColor(mano[i]) == "VERDE")
+            {
+                contadorColorVerde+=1;
+            }
+            else if (devolverColor(mano[i]) == "AMARILLO")
+            {
+                contadorColorAmarillo+=1;
+
+            }
+            else if (devolverColor(mano[i]) == "AZUL")
+            {
+                contadorColorAzul+=1;
+            }
+            else if (devolverColor(mano[i]) == "ROJO")
+            {
+                contadorColorRojo+=1;
+            }
+    }
+    if ((contadorColorAzul==1 && contadorColorAmarillo==1 && contadorColorRojo==1) || (contadorColorAmarillo==1 && contadorColorRojo==1 &&
+        contadorColorVerde==1) || (contadorColorVerde==1 && contadorColorRojo==1 && contadorColorAzul==1) || (contadorColorVerde==1 && contadorColorAmarillo==1 &&
+        contadorColorAzul==1)){
+            return true;
+        }
+    return false;
+}
+
+

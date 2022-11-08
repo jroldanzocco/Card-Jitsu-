@@ -19,3 +19,10 @@ void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJuga
 void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsuario);
 void empate(string manoJugador[],string manoCPU[],string cartasJugadas[]);
 void victDesafio(int desafio, string mano[], int *completarDesafio, char numeroConsecutivo[]);
+
+
+bool combinacionGanadora(string mano[]);
+string devolverElemento(string carta);
+string devolverColor(string carta);
+bool hayTresColores(string mano[], int tam);
+
