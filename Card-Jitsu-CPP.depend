@@ -20,7 +20,7 @@
 	<sys/types.h>
 	<sys/time.h>
 
-1667759743 source:c:\users\jere\documents\github\card-jitsu-\main.cpp
+1667914653 source:c:\users\jere\documents\github\card-jitsu-\main.cpp
 	<iostream>
 	<ctime>
 	"rlutil.h"
@@ -28,9 +28,9 @@
 	"funciones.h"
 	"configFunctions.h"
 
-1667912070 c:\users\jere\documents\github\card-jitsu-\funciones.h
+1667921828 c:\users\jere\documents\github\card-jitsu-\funciones.h
 
-1667761449 source:c:\users\jere\documents\github\card-jitsu-\funciones.cpp
+1667918691 source:c:\users\jere\documents\github\card-jitsu-\funciones.cpp
 	<iostream>
 	<ctime>
 	"rlutil.h"
@@ -40,7 +40,7 @@
 
 1667593668 c:\users\jere\documents\github\card-jitsu-\configfunctions.h
 
-1667911505 source:c:\users\jere\documents\github\card-jitsu-\configfunctions.cpp
+1667914653 source:c:\users\jere\documents\github\card-jitsu-\configfunctions.cpp
 	<iostream>
 	<ctime>
 	"rlutil.h"
