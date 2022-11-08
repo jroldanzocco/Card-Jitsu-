@@ -6,6 +6,232 @@
 #include "configFunctions.h"
 using namespace std;
 
+void logo ()
+{
+
+    int xcolumna;
+    rlutil::hidecursor();
+
+    rlutil::setBackgroundColor(rlutil::BLACK);
+
+    rlutil::setColor(rlutil::WHITE);
+
+    ///letra C
+    rlutil::locate(30, 3);
+    std::cout<< "******"<<std::endl;
+    //std::cout<< " "<<std::endl;
+    rlutil::locate(30, 4);
+    //std::cout<< " "<<std::endl;
+    std::cout<< "**"<<std::endl;
+    //std::cout<< " "<<std::endl;
+    rlutil::locate(30, 5);
+    //std::cout<< " "<<std::endl;
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(30, 6);
+    // std::cout<< " "<<std::endl;
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(30, 7);
+    // std::cout<< " "<<std::endl;
+    std::cout<< "******"<<std::endl;
+
+    ///LETRA A
+    rlutil::locate(37, 3);
+    std::cout<< "******"<<std::endl;
+    rlutil::locate(37, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(37, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(38, 5);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(37, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(37, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(41, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 7);
+    std::cout<< "**"<<std::endl;
+
+    ///LETRA R
+    rlutil::locate(44, 3);
+    std::cout<< "****"<<std::endl;
+    rlutil::locate(44, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(44, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(44, 5);
+    std::cout<< "***"<<std::endl;
+    rlutil::locate(44, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(44, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(46, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(47, 3);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(47, 4);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(47, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(47, 6);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(47, 7);
+    std::cout<< " *"<<std::endl;
+
+    ///LETRA D
+    rlutil::locate(50, 3);
+    std::cout<< "****"<<std::endl;
+    rlutil::locate(50, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(52, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(53, 4);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(53, 5);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(53, 6);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(52, 7);
+    std::cout<< "*"<<std::endl;
+
+    ///LETRA J
+    rlutil::locate(60, 3);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(63, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(63, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(63, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(63, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(60, 7);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(63, 5);
+    std::cout<< "*"<<std::endl;
+
+
+    ///LETRA I
+    rlutil::locate(66, 3);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(68, 4);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(68, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(68, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(68, 6);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(66, 7);
+    std::cout<< "*****"<<std::endl;
+
+    //LETRA T
+    rlutil::locate(72, 3);
+    std::cout<< "******"<<std::endl;
+    rlutil::locate(74, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 7);
+    std::cout<< "**"<<std::endl;
+
+    ///LETRA S
+    rlutil::locate(79, 3);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(79, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(79, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(79, 5);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(82, 6);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(79, 7);
+    std::cout<< "*****"<<std::endl;
+    ///LETRA U
+    rlutil::locate(85, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 7);
+    std::cout<< "*******"<<std::endl;
+    rlutil::locate(90, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 6);
+    std::cout<< "**"<<std::endl;
+
+
+
+    rlutil::setColor(rlutil::LIGHTCYAN);
+    rlutil::locate (96,3);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (96,4);
+    std::cout<< (char)197<<std::endl;
+    rlutil::locate (96,5);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (94,4);
+    std::cout<< (char)196<<std::endl;
+    rlutil::locate (98,4);
+    std::cout<< (char)196<<std::endl;
+
+
+
+    rlutil::locate (100,5);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (100,6);
+    std::cout<< (char)197<<std::endl;
+    rlutil::locate (100,7);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (98,6);
+    std::cout<< (char)196<<std::endl;
+    rlutil::locate (102,6);
+    std::cout<< (char)196<<std::endl;
+
+    rlutil::setColor(rlutil::LIGHTCYAN);
+    for (xcolumna=22; xcolumna<=105; xcolumna++)
+    {
+        Sleep(20);
+        rlutil::locate (xcolumna,2);
+        std::cout<<(char)242;
+        rlutil::locate (xcolumna,8);
+        std::cout<<(char)242;
+    }
+}
+
+
+
 
 void ronda(int nroRonda, string nombre){
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
