@@ -277,7 +277,8 @@ void robarCarta(string mazo[], string manoJugador[], string manoCPU[])
                 {
                     manoJugador[j] = mazo[i];
                     rlutil::locate (5,10);
-                    cout << "ROBASTE LA CARTA "<<  mazo[i]<< endl;
+                    cout << "ROBASTE LA CARTA" << endl;
+                    drawCard(mazo[i][0],mazo[i].back(),5,12,mazo[i][3]);
                     mazo[i] = "";
                     repartidoPlayer ++;
                     banderaRobar=true;
