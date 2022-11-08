@@ -265,6 +265,7 @@ void asignarCartas(string mazo[], string manoJugador[],string manoCPU[])
 
 void robarCarta(string mazo[], string manoJugador[], string manoCPU[])
 {
+    bool banderaRobar=false;
     int repartidoPlayer = 0, repartidoCPU = 0;
     for(int i = 0; i < 60 ; i++)
     {
@@ -272,11 +273,14 @@ void robarCarta(string mazo[], string manoJugador[], string manoCPU[])
         {
             for(int j = 0; j < 60; j++)
             {
-                if(manoJugador[j] == "")
+                if(manoJugador[j] == "" && banderaRobar==false)
                 {
                     manoJugador[j] = mazo[i];
+                    rlutil::locate (5,10);
+                    cout << "ROBASTE LA CARTA "<<  mazo[i]<< endl;
                     mazo[i] = "";
                     repartidoPlayer ++;
+                    banderaRobar=true;
                 }
             }
         }
@@ -880,8 +884,6 @@ void mostrarEstadisticas (string nombre, int vEstadisticasJugador[], int vEstadi
 {
     int i;
     int acumulador=0, acumulador2=0;
-    int acumuladorPuntosJugador=0;
-    int acumuladorPuntosCPU=0;
 
     if (ganadorPartida=="CPU")
     {
