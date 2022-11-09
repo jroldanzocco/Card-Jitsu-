@@ -70,7 +70,7 @@ int main()
                 ronda(1, nombreUsuario, jugar);
                 break;
             case 2:
-                 //mostrarEstadisticas(vEstadisticasMayorPuntaje, mayorPuntaje,nombreUsuario);
+                 mostrarEstadisticas(vEstadisticasMayorPuntaje, mayorPuntaje,nombreUsuario);
                 break;
             case 3:
                 rlutil::cls();

@@ -20,8 +20,9 @@ void ronda(int nroRonda, string nombre, bool jugar)
     char numeroDesafioNueve[5] = {};
 
     //
-    int vEstadisticasJugador[5]= {};
     int vEstadisticasCPU[5]= {};
+    int vEstadisticasJugador[5]= {};
+    int mayorPuntaje;
     bool ganadorElementosCPU = false, ganadorElementosJugador = false, ganadorDesafioJugador = false, ganadorDesafioCPU = false;;
     //
 
