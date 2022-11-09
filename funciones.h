@@ -21,10 +21,12 @@ void empate(string manoJugador[],string manoCPU[],string cartasJugadas[]);
 void victDesafio(int desafio, string mano[], int completarDesafio[], char numeroConsecutivo[], int vEstadisticas[]);
 
 void mostrarGanador (bool ganadorDesafioJugador, bool ganadorDesafioCPU, bool ganadorElementosJugador, bool ganadorElementosCPU, string nombre, string &ganadorPartida, int vEstadisticasCPU[], int vEstadisticasJugador[]);
-void mostrarEstadisticas (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string ganadorPartida);
+void mostrarHitos (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string ganadorPartida);
 
 bool combinacionGanadora(string mano[]);
 string devolverElemento(string carta);
 string devolverColor(string carta);
 bool hayTresColores(string mano[], int tam);
 
+void mostrarEstadisticas (int vEstadisticasMayorPuntaje[], int &mayorPuntaje, string nombre);
+int definirMayorPuntaje (string nombre, int &acumuladorPuntosJugador, int vEstadisticasJugador[],int vEstadisticasMayorPuntaje[]);

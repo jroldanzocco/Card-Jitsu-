@@ -881,7 +881,7 @@ bool hayTresColores(string mano[], int tam)
     return false;
 }
 
-void mostrarEstadisticas (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string ganadorPartida)
+void mostrarHitos (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string ganadorPartida)
 {
     int i;
     int acumulador=0, acumulador2=0;
@@ -970,7 +970,7 @@ void mostrarGanador (bool ganadorDesafioJugador, bool ganadorDesafioCPU, bool ga
         cout << "CPU GANO LA PARTIDA"<< endl;
         vEstadisticasCPU[0]+=3;
         ganadorPartida="CPU";
-        mostrarEstadisticas ( nombre, vEstadisticasJugador,vEstadisticasCPU, ganadorPartida);
+        mostrarHitos ( nombre, vEstadisticasJugador,vEstadisticasCPU, ganadorPartida);
     }
 
 
@@ -979,10 +979,23 @@ void mostrarGanador (bool ganadorDesafioJugador, bool ganadorDesafioCPU, bool ga
         cout << "FELICIDADES "<< nombre<< " GANASTE LA PARTIDA"<< endl;
         vEstadisticasJugador[0]+=3;
         ganadorPartida=nombre;
-        mostrarEstadisticas (nombre, vEstadisticasJugador, vEstadisticasCPU, ganadorPartida);
+        mostrarHitos (nombre, vEstadisticasJugador, vEstadisticasCPU, ganadorPartida);
 
     }
 
 }
 
+void mostrarEstadisticas (int vEstadisticasMayorPuntaje[], int &mayorPuntaje, string nombre)
+{
+    int x;
 
+    cout << "MAYOR PUNTAJE HISTORICO                                                       JUGADOR: "<<nombre<<endl;
+    cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+    cout << "GANADOR DE LA PARTIDA                                           " << vEstadisticasMayorPuntaje[0]<< " PDV"<<endl;
+    cout << "COMBINACION DE ELEMENTOS CUMPLIDOS POR EL CONTRARIO             " << vEstadisticasMayorPuntaje[1]<< " PDV"<<endl;
+    cout << "CARTA DESAFIO CUMPLIDO POR EL CONTRARIO                         " << vEstadisticasMayorPuntaje[2]<< " PDV "<<endl;
+    cout << "RONDAS GANADAS AL ADVERSARIO                                    " << vEstadisticasMayorPuntaje[3]<< " PDV "<<endl;
+    cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasMayorPuntaje[4]<< " PDV "<<endl;
+    cout << "-----------------------------------------------------------------------------------------------------"<<endl;
+    cout << "TOTAL                                                             "<<mayorPuntaje<<" PDV"<<endl;
+}

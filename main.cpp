@@ -12,6 +12,9 @@ int main()
 
     //VARIABLES
     string nombreUsuario;
+    int vEstadisticasMayorPuntaje[5]={};
+    int puntajeJugador=0;
+    int mayorPuntaje=0;
     bool jugar = true;
    int op = 1, y = 0;
    logo();
@@ -67,6 +70,7 @@ int main()
                 ronda(1, nombreUsuario, jugar);
                 break;
             case 2:
+                 //mostrarEstadisticas(vEstadisticasMayorPuntaje, mayorPuntaje,nombreUsuario);
                 break;
             case 3:
                 rlutil::cls();
