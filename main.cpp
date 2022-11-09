@@ -7,18 +7,21 @@
 using namespace std;;
 int main()
 {
-   srand(time(NULL));
+    srand(time(NULL));
     rlutil::hidecursor();
 
     //VARIABLES
     string nombreUsuario;
+    int vEstadisticasMayorPuntaje[5]={};
+    int puntajeJugador=0;
+    int mayorPuntaje=0;
+    int op = 1, y = 0;
+    logo();
+    do
+    {
 
-   int op = 1, y = 0;
-   logo();
-    do{
 
-
-       rlutil::setBackgroundColor(rlutil::BLACK);
+        rlutil::setBackgroundColor(rlutil::BLACK);
 
 
         rlutil::setColor(rlutil::DARKGREY);
@@ -38,12 +41,14 @@ int main()
         rlutil::locate(38,10+y);
         std::cout<<(char)175<< std::endl;
 
-        switch(rlutil::getkey()){
+        switch(rlutil::getkey())
+        {
         case 14: //UP
             rlutil::locate(38,10+y);
             cout << " " << endl;
             y--;
-            if(y < 0){
+            if(y < 0)
+            {
                 y = 4;
             }
             break;
@@ -51,21 +56,26 @@ int main()
             rlutil::locate(38,10+y);
             cout << " " << endl;
             y++;
-            if(y > 4){
+            if(y > 4)
+            {
                 y = 0;
             }
             break;
         case 1: //ENTER
-            switch(y+1){
+            switch(y+1)
+            {
             case 1:
                 rlutil::cls();
-                do{
-                nombreUsuario = solicitarNombre();
-                confirmarNombre(nombreUsuario);
-                }while(nombreUsuario == "");
+                do
+                {
+                    nombreUsuario = solicitarNombre();
+                    confirmarNombre(nombreUsuario);
+                }
+                while(nombreUsuario == "");
                 ronda(1, nombreUsuario);
                 break;
             case 2:
+                mostrarEstadisticas (vEstadisticasMayorPuntaje, mayorPuntaje,nombreUsuario);
                 break;
             case 3:
                 rlutil::cls();
@@ -88,7 +98,8 @@ int main()
 
 
 
-    }while(op != 0);
+    }
+    while(op != 0);
 
 
     return 0;
