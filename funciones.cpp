@@ -239,8 +239,9 @@ void ronda(int nroRonda, string nombre)
     bool ganadorDesafioCPU=false, ganadorDesafioJugador=false;
     string ganadorPartida=" ";
     int desafioUsuario, desafioCPU;
-     int vEstadisticasCPU[5]={};
-     int vEstadisticasJugador[5]={};
+    int vEstadisticasCPU[5]= {};
+    int vEstadisticasJugador[5]= {};
+    int mayorPuntaje;
     crearMazo(mazo);
     mezclarMazo(mazo, 60);
     asignarCartas(mazo, manoJugador, manoCPU);
