@@ -1,6 +1,6 @@
 #pragma once
 using  namespace std;
-
+void logo ();
 void ronda(int nroRonda, string nombre, bool jugar);
 int asignarDesafio(int desafioAnterior);
 string mostrarDesafio(int numero);

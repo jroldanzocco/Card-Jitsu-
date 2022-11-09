@@ -279,98 +279,226 @@ void reglamento()
             }
         }
 
-//FUNCIONES FIORE
-
-//ESTADISTICAS Y GANADOR
-/*
-    bool ganadorDesafioCPU;
-    bool ganadorDesafioJugador;
-    bool ganadorElementosCPU;
-    bool ganadorElementosJugador;
-    string ganadorPartida;
-    int vEstadisticasJugador[5];
-    int vEstadisticasCPU[5];
-void mostrarEstadisticas (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string &ganadorPartida)
-{
-    int i;
-    int acumulador;
-    int acumuladorPuntosJugador=0;
-    int acumuladorPuntosCPU=0;
-    if (ganadorPartida=="JUGADOR")
-    {
-        for (i=0; i<5; i++)
-        {
-
-            acumulador= vEstadisticasJugador[i];
-            acumuladorPuntosJugador+=acumulador;
-
-        }
-        cout << "HITO "<<endl;
-        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
-        cout << "GANADOR DE LA PARTIDA                                           " << vEstadisticasJugador[0]<< " PDV"<<endl;
-        cout << "COMBINACION DE ELEMENTOS CUMPLIDOS POR EL CONTRARIO             " << vEstadisticasJugador[1]<< " PDV"<<endl;
-        cout << "CARTA DESAFIO CUMPLIDO POR EL CONTRARIO                         " << vEstadisticasJugador[2]<< " PDV "<<endl;
-        cout << "RONDAS GANADAS AL ADVERSARIO                                    " << vEstadisticasJugador[3]<< " PDV "<<endl;
-        cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasJugador[4]<< " PDV "<<endl;
-        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
-        cout << "TOTAL                                                             "<< acumuladorPuntosJugador<<" PDV"<<endl;
-
-
-        cout<< "GANADOR "<< nombre << " CON "<< acumuladorPuntosJugador<< " PUNTOS DE VICTORIA "<<endl;
-
-    }
-
-    else if (ganadorPartida=="CPU")
-    {
-
-        for (i=0; i<5; i++)
-        {
-            acumulador= vEstadisticasCPU[i];
-            acumuladorPuntosCPU+=acumulador;
-
-
-        }
-        cout << "HITO "<<endl;
-        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
-        cout << "GANADOR DE LA PARTIDA                                           " << vEstadisticasCPU[0]<< " PDV"<<endl;
-        cout << "COMBINACION DE ELEMENTOS CUMPLIDOS POR EL CONTRARIO             " << vEstadisticasCPU[1]<< " PDV"<<endl;
-        cout << "CARTA DESAFIO CUMPLIDO POR EL CONTRARIO                         " << vEstadisticasCPU[2]<< " PDV "<<endl;
-        cout << "RONDAS GANADAS AL ADVERSARIO                                    " << vEstadisticasCPU[3]<< " PDV "<<endl;
-        cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasCPU[4]<< " PDV "<<endl;
-        cout << "-----------------------------------------------------------------------------------------------------"<<endl;
-        cout << "TOTAL                                                           "<< acumuladorPuntosCPU<<" PDV"<<endl;
-
-
-        cout<< "GANADOR CPU CON "<< acumuladorPuntosCPU<< " PUNTOS DE VICTORIA "<<endl;
-    }
-
-}
-
-
-
-string mostrarGanador (bool &ganadorDesafioJugador, bool &ganadorDesafioCPU, bool &ganadorElementosJugador, bool &ganadorElementosCPU, string nombre, string ganadorPartida, int vEstadisticasCPU[], int vEstadisticasJugador[])
+void logo ()
 {
 
-    if (ganadorDesafioCPU==true && ganadorElementosCPU==true)
+    int xcolumna;
+    rlutil::hidecursor();
+
+    rlutil::setBackgroundColor(rlutil::BLACK);
+
+    rlutil::setColor(rlutil::WHITE);
+
+    ///letra C
+    rlutil::locate(30, 3);
+    std::cout<< "******"<<std::endl;
+    //std::cout<< " "<<std::endl;
+    rlutil::locate(30, 4);
+    //std::cout<< " "<<std::endl;
+    std::cout<< "**"<<std::endl;
+    //std::cout<< " "<<std::endl;
+    rlutil::locate(30, 5);
+    //std::cout<< " "<<std::endl;
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(30, 6);
+    // std::cout<< " "<<std::endl;
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(30, 7);
+    // std::cout<< " "<<std::endl;
+    std::cout<< "******"<<std::endl;
+
+    ///LETRA A
+    rlutil::locate(37, 3);
+    std::cout<< "******"<<std::endl;
+    rlutil::locate(37, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(37, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(38, 5);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(37, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(37, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(41, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 7);
+    std::cout<< "**"<<std::endl;
+
+    ///LETRA R
+    rlutil::locate(44, 3);
+    std::cout<< "****"<<std::endl;
+    rlutil::locate(44, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(44, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(44, 5);
+    std::cout<< "***"<<std::endl;
+    rlutil::locate(44, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(44, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(46, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(47, 3);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(47, 4);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(47, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(47, 6);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(47, 7);
+    std::cout<< " *"<<std::endl;
+
+    ///LETRA D
+    rlutil::locate(50, 3);
+    std::cout<< "****"<<std::endl;
+    rlutil::locate(50, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(52, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(53, 4);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(53, 5);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(53, 6);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(52, 7);
+    std::cout<< "*"<<std::endl;
+
+    ///LETRA J
+    rlutil::locate(60, 3);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(63, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(63, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(63, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(63, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(60, 7);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(63, 5);
+    std::cout<< "*"<<std::endl;
+
+
+    ///LETRA I
+    rlutil::locate(66, 3);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(68, 4);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(68, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(68, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(68, 6);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(66, 7);
+    std::cout<< "*****"<<std::endl;
+
+    //LETRA T
+    rlutil::locate(72, 3);
+    std::cout<< "******"<<std::endl;
+    rlutil::locate(74, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 7);
+    std::cout<< "**"<<std::endl;
+
+    ///LETRA S
+    rlutil::locate(79, 3);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(79, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(79, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(79, 5);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(82, 6);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(79, 7);
+    std::cout<< "*****"<<std::endl;
+    ///LETRA U
+    rlutil::locate(85, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 7);
+    std::cout<< "*******"<<std::endl;
+    rlutil::locate(90, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 6);
+    std::cout<< "**"<<std::endl;
+
+
+
+    rlutil::setColor(rlutil::LIGHTCYAN);
+    rlutil::locate (96,3);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (96,4);
+    std::cout<< (char)197<<std::endl;
+    rlutil::locate (96,5);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (94,4);
+    std::cout<< (char)196<<std::endl;
+    rlutil::locate (98,4);
+    std::cout<< (char)196<<std::endl;
+
+
+
+    rlutil::locate (100,5);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (100,6);
+    std::cout<< (char)197<<std::endl;
+    rlutil::locate (100,7);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (98,6);
+    std::cout<< (char)196<<std::endl;
+    rlutil::locate (102,6);
+    std::cout<< (char)196<<std::endl;
+
+    rlutil::setColor(rlutil::LIGHTCYAN);
+    for (xcolumna=22; xcolumna<=105; xcolumna++)
     {
-        cout << "CPU GANO LA PARTIDA"<< endl;
-        vEstadisticasCPU[0]+=3;
-        ganadorPartida="CPU";
-        mostrarEstadisticas ( nombre, vEstadisticasJugador,vEstadisticasCPU, ganadorPartida);
+        Sleep(20);
+        rlutil::locate (xcolumna,2);
+        std::cout<<(char)242;
+        rlutil::locate (xcolumna,8);
+        std::cout<<(char)242;
     }
-
-
-    else if (ganadorDesafioJugador==true && ganadorElementosJugador==true)
-    {
-        cout << "FELICIDADES"<< nombre<< " GANASTE LA PARTIDA"<< endl;
-        vEstadisticasJugador[0]+=3;
-        ganadorPartida=nombre;
-        mostrarEstadisticas (nombre, vEstadisticasJugador, vEstadisticasCPU, ganadorPartida);
-
-    }
-
-    return ganadorPartida;
 }
-
-
-*/
