@@ -1,40 +1,37 @@
 #include <iostream>
 #include <ctime>
 #include "rlutil.h"
-#include "card.h"
 #include "funciones.h"
-#include "configFunctions.h"
 using namespace std;
 
-void ronda(int nroRonda, string nombre, bool jugar)
+void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaje[],  string nombreMaximo[])
 {
+    ///DECLARACION DE VARIABLES
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
     int desafioUsuario = asignarDesafio(0);
     int desafioCPU = asignarDesafio(desafioUsuario);
-
-    //
+    int mayorPuntaje;
     string ganadorPartida;
-    //
-
-    int contadorDesafioUsuario[2], contadorDesafioCPU[2];
-    char numeroDesafioNueve[5] = {};
-
-    //
+    bool ganadorElementosCPU = false, ganadorElementosJugador = false, ganadorDesafioJugador = false, ganadorDesafioCPU = false;
     int vEstadisticasCPU[5]= {};
     int vEstadisticasJugador[5]= {};
-    int mayorPuntaje;
-    bool ganadorElementosCPU = false, ganadorElementosJugador = false, ganadorDesafioJugador = false, ganadorDesafioCPU = false;;
-    //
 
+
+    ///LLAMADO A FUNCIONES
     crearMazo(mazo);
     mezclarMazo(mazo, 60);
     asignarCartas(mazo, manoJugador, manoCPU);
+    ///INICIALIZACION
+    int contadorDesafioUsuario[2]= {};
+    int contadorDesafioCPU[2] = {};
+    char numeroDesafioNueve[5] = {};
+    int completarDesafio[2]= {};
     int y = 0;
     bool cartaRobada = false;
+    ///--------------------
     rlutil::cls();
     do
     {
-
         if(!cartaRobada)
         {
             rlutil::locate(5,5);
@@ -72,6 +69,10 @@ void ronda(int nroRonda, string nombre, bool jugar)
                     rlutil::cls();
                     rlutil::locate(5,5);
                     cout << mostrarDesafio(desafioUsuario) << endl;
+                    ///SOLO DE PRUEBA
+                    rlutil::locate(5,6);
+                    cout << mostrarDesafio(desafioCPU) << endl;
+                    ///-------------------
                     rlutil::locate(5, 10);
                     cout << "Presione una tecla para volver...";
                     rlutil::anykey();
@@ -150,10 +151,9 @@ void ronda(int nroRonda, string nombre, bool jugar)
                     eleccionCartaUsuario(manoJugador,cartasJugadas);
                     eleccionCartaCPU(manoCPU, cartasJugadas);
                     mostrarCartasJugadas(cartasJugadas,nombre);
-                    condicionDeVictRonda(cartasJugadas,nombre,manoJugador,manoCPU, vEstadisticasCPU, vEstadisticasJugador);
-
-                    victDesafio(desafioUsuario,manoJugador, contadorDesafioUsuario, numeroDesafioNueve, vEstadisticasCPU);
-                    victDesafio(desafioCPU,manoCPU, contadorDesafioCPU, numeroDesafioNueve, vEstadisticasJugador);
+                    condicionDeVictRonda(cartasJugadas, nombre, manoJugador, manoCPU, vEstadisticasCPU, vEstadisticasJugador);
+                    victDesafioJugador(desafioUsuario, manoJugador, contadorDesafioUsuario, numeroDesafioNueve, vEstadisticasCPU);
+                    victDesafioCPU(desafioCPU,manoCPU, contadorDesafioCPU, numeroDesafioNueve, vEstadisticasJugador);
                     ordenamientoDeManos(manoJugador);
                     ordenamientoDeManos(manoCPU);
                     ganadorElementosJugador = combinacionGanadora(manoJugador);
@@ -162,6 +162,10 @@ void ronda(int nroRonda, string nombre, bool jugar)
                     {
                         ganadorDesafioJugador = true;
                         vEstadisticasCPU[2]-=1;
+                        ///PRUEBA
+                        contadorDesafioUsuario[2]= {};
+                        contadorDesafioCPU[2] = {};
+                        ///------------------------------
                     }
                     if(contadorDesafioCPU[0] && contadorDesafioCPU[1])
                     {
@@ -180,7 +184,6 @@ void ronda(int nroRonda, string nombre, bool jugar)
                     rlutil::anykey();
                     if((ganadorDesafioJugador && ganadorElementosJugador) || (ganadorDesafioCPU && ganadorElementosCPU))
                     {
-
                         jugar = false;
                     }
                     rlutil::cls();
@@ -191,11 +194,10 @@ void ronda(int nroRonda, string nombre, bool jugar)
         }
     }
     while(jugar);
-    mostrarGanador (ganadorDesafioJugador,ganadorDesafioCPU,ganadorElementosJugador,ganadorElementosCPU,nombre,ganadorPartida,vEstadisticasCPU,vEstadisticasJugador);
+    mostrarGanador (ganadorDesafioJugador,ganadorDesafioCPU,ganadorElementosJugador,ganadorElementosCPU,nombre,ganadorPartida,vEstadisticasCPU,vEstadisticasJugador, vEstadisticasMayorPuntaje,nombreMaximo);
     rlutil::anykey();
     rlutil::cls();
 }
-
 int asignarDesafio(int desafioAnterior)
 {
     int desafio;
@@ -206,7 +208,6 @@ int asignarDesafio(int desafioAnterior)
     while(desafio == desafioAnterior);
     return desafio;
 }
-
 string mostrarDesafio(int numero)
 {
 
@@ -217,7 +218,6 @@ string mostrarDesafio(int numero)
 
     return cartasDesafio[numero-1];
 }
-
 void crearMazo(string mazo[])
 {
     string numero[5] = {"1","2","3","4","5"};
@@ -237,7 +237,6 @@ void crearMazo(string mazo[])
         }
     }
 }
-
 void mezclarMazo(string mazo[], int cantidadCartas)
 {
     for(int i = 0; i < cantidadCartas; i++)
@@ -249,7 +248,6 @@ void mezclarMazo(string mazo[], int cantidadCartas)
         mazo[j] = aux;
     }
 }
-
 void asignarCartas(string mazo[], string manoJugador[],string manoCPU[])
 {
     const int CARTASINICIALES = 3;
@@ -263,10 +261,9 @@ void asignarCartas(string mazo[], string manoJugador[],string manoCPU[])
         repartido+=2;
     }
 }
-
 void robarCarta(string mazo[], string manoJugador[], string manoCPU[])
 {
-    bool banderaRobar=false;
+    /*bool banderaRobar=false;*/
     int repartidoPlayer = 0, repartidoCPU = 0;
     for(int i = 0; i < 60 ; i++)
     {
@@ -274,7 +271,7 @@ void robarCarta(string mazo[], string manoJugador[], string manoCPU[])
         {
             for(int j = 0; j < 60; j++)
             {
-                if(manoJugador[j] == "" && banderaRobar==false)
+                if(manoJugador[j] == "" && repartidoPlayer == 0 /*banderaRobar==false*/)
                 {
                     manoJugador[j] = mazo[i];
                     rlutil::locate (5,10);
@@ -282,7 +279,7 @@ void robarCarta(string mazo[], string manoJugador[], string manoCPU[])
                     drawCard(mazo[i][0],mazo[i].back(),5,12,mazo[i][3]);
                     mazo[i] = "";
                     repartidoPlayer ++;
-                    banderaRobar=true;
+                    /*banderaRobar=true;*/
                 }
             }
         }
@@ -383,7 +380,6 @@ void eleccionCartaUsuario(string manoJugador[], string cartasJugadas[])
 
 
 }
-
 int cantidadCartasEnMano(string mano[])
 {
     string auxiliar[60];
@@ -394,8 +390,6 @@ int cantidadCartasEnMano(string mano[])
     }
     return i;
 }
-
-
 void dibujarCartasDisponibles(string mano[])
 {
     int cartas = cantidadCartasEnMano(mano);
@@ -494,7 +488,6 @@ void dibujarCartasDisponibles(string mano[])
         }
     }
 }
-
 void eleccionCartaCPU(string manoCPU[], string cartasJugadas[])
 {
     const int limiteCartas = 60;
@@ -512,7 +505,6 @@ void eleccionCartaCPU(string manoCPU[], string cartasJugadas[])
     manoCPU[jugadaRandom] = "";
 
 }
-
 void ordenamientoDeManos(string manoGeneral[])
 {
     string auxiliar[60];
@@ -534,7 +526,6 @@ void ordenamientoDeManos(string manoGeneral[])
         manoGeneral[i] = auxiliar[i];
     }
 }
-
 void acomodarCartasEnPantalla(bool pos[][8], string mano[])
 {
     int maximoX = 8;
@@ -562,7 +553,6 @@ void mostrarCartasJugadas(string cartasJugadas[], string nombre)
     cout << "CPU JUEGA" << endl;
     drawCard(cartasJugadas[1][0],cartasJugadas[1].back(),61,6,cartasJugadas[1][3]);
 }
-
 void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJugador[], string manoCPU[], int vEstadisticasCPU[],int vEstadisticasJugador[])
 {
     rlutil::locate(25,13);
@@ -615,7 +605,6 @@ void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJuga
         }
     }
 }
-
 void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsuario, int vEstadisticas[])
 {
     if(ganoUsuario)
@@ -631,20 +620,6 @@ void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsua
         vEstadisticas[3]+=1;
     }
 }
-/*
-void juego(){
-    int nroRonda = 1;
-    string nombreUsuario;
-    do{
-        nombreUsuario = solicitarNombre();
-        confirmarNombre(nombreUsuario);
-    }while(nombreUsuario == "");
-
-    ronda(nroRonda,nombreUsuario);
-
-
-}*/
-
 void empate(string manoJugador[],string manoCPU[],string cartasJugadas[])
 {
     manoJugador[58] = cartasJugadas[0];
@@ -652,122 +627,285 @@ void empate(string manoJugador[],string manoCPU[],string cartasJugadas[])
 }
 //En estadisticas debe ir la mano del adversario, es decir, para comprobar desafio usuario se utiliza estadisticasCPU
 //y viceversa
-void victDesafio(int desafio, string mano[], int completarDesafio[], char numeroConsecutivo[], int vEstadisticas[])
+void victDesafioJugador(int desafio, string manoJugador[], int completarDesafioUsuario[], char numeroConsecutivo[], int vEstadisticas[])
 {
-    int numActual = (int)mano[59][0] - 49;
+    int numActual = (int)manoJugador[59][0] - 49;
     switch(desafio)
     {
     case 1:
-        if (mano[59].find("NIEVE") != std::string::npos)
+        if (manoJugador[59].find("NIEVE") != std::string::npos)
         {
-            completarDesafio[0] = true;
-            completarDesafio[1] = true;
+            completarDesafioUsuario[0] = true;
+            completarDesafioUsuario[1] = true;
         }
         break;
     case 2:
-        if (mano[59].find("FUEGO") != std::string::npos)
+        if (manoJugador[59].find("FUEGO") != std::string::npos)
         {
-            completarDesafio[0] = true;
-            completarDesafio[1] = true;
+            completarDesafioUsuario[0] = true;
+            completarDesafioUsuario[1] = true;
         }
         break;
     case 3:
-        if (mano[59].find("AGUA") != std::string::npos)
+        if (manoJugador[59].find("AGUA") != std::string::npos)
         {
-            completarDesafio[0] = true;
-            completarDesafio[1] = true;
+            completarDesafioUsuario[0] = true;
+            completarDesafioUsuario[1] = true;
         }
         break;
     case 4:
 
-        if(mano[59][3] == 'O')
+        if(manoJugador[59][3] == 'O' && manoJugador[59] != "")
         {
-            if(!completarDesafio[0])
+            if(!completarDesafioUsuario[0])
             {
-                completarDesafio[0] = true;
+                completarDesafioUsuario[0] = true;
+                cout << "JUGADOR GANO 1 ROJA" << endl;
+                cout << "carta: " << manoJugador[59] << endl;
+                system("pause");
             }
             else
             {
-                completarDesafio[1] = true;
+                completarDesafioUsuario[1] = true;
+                cout << "JUGADOR GANO 2 ROJAS" << endl;
+                cout << "carta: " << manoJugador[59] << endl;
+                system("pause");
             }
         }
         break;
     case 5:
-        if(mano[59][3] == 'M')
+        if(manoJugador[59][3] == 'M' && manoJugador[59] != "")
         {
-            if(!completarDesafio[0])
+            if(!completarDesafioUsuario[0])
             {
-                completarDesafio[0] = true;
+                completarDesafioUsuario[0] = true;
+                cout << "JUGADOR GANO 1 AMARILLA" << endl;
+                cout << "carta: " << manoJugador[59] << endl;
+                system("pause");
             }
             else
             {
-                completarDesafio[1] = true;
+                completarDesafioUsuario[1] = true;
+                cout << "JUGADOR GANO 2 AMARILLA" << endl;
+                cout << "carta: " << manoJugador[59] << endl;
+                system("pause");
             }
         }
         break;
     case 6:
-        if(mano[59][3] == 'E')
+        if(manoJugador[59][3] == 'E' && manoJugador[59] != "")
         {
-            if(!completarDesafio[0])
+            if(!completarDesafioUsuario[0])
             {
-                completarDesafio[0] = true;
+                completarDesafioUsuario[0] = true;
+                cout << "JUGADOR GANO 1 VERDE" << endl;
+                cout << "carta: " << manoJugador[59] << endl;
+                system("pause");
             }
             else
             {
-                completarDesafio[1] = true;
+                completarDesafioUsuario[1] = true;
+                cout << "JUGADOR GANO 2 VERDES" << endl;
+                cout << "carta: " << manoJugador[59] << endl;
+                system("pause");
             }
         }
         break;
     case 7:
-        if(mano[59][3] == 'Z')
+        if(manoJugador[59][3] == 'Z' && manoJugador[59] != "")
         {
-            if(!completarDesafio[0])
+            if(!completarDesafioUsuario[0])
             {
-                completarDesafio[0] = true;
+                completarDesafioUsuario[0] = true;
+                cout << "JUGADOR GANO 1 AZUL" << endl;
+                cout << "carta: " << manoJugador[59] << endl;
+                system("pause");
             }
             else
             {
-                completarDesafio[1] = true;
+                completarDesafioUsuario[1] = true;
+                cout << "JUGADOR GANO 2 AZULES" << endl;
+                cout << "carta: " << manoJugador[59] << endl;
+                system("pause");
             }
         }
         break;
     case 8:
-        if (mano[58] != "" && mano[58].back() == mano[59].back())
+        if (manoJugador[59] != "" && manoJugador[58].back() == manoJugador[59].back())
         {
-            completarDesafio[0] = true;
-            completarDesafio[1] = true;
+            completarDesafioUsuario[0] = true;
+            completarDesafioUsuario[1] = true;
         }
         break;
     case 9:
-        if(mano[59] != "")
+        if(manoJugador[59] != "")
         {
             if(numeroConsecutivo[numActual] == '\0')
             {
-                numeroConsecutivo[numActual] = mano[59][0];
+                numeroConsecutivo[numActual] = manoJugador[59][0];
             }
             else
             {
-                completarDesafio[0] = true;
-                completarDesafio[1] = true;
+                completarDesafioUsuario[0] = true;
+                completarDesafioUsuario[1] = true;
             }
         }
         break;
     case 10:
-        if(mano[59] != "" && !completarDesafio[0])
+        if(manoJugador[59] != "" && !completarDesafioUsuario[0])
         {
-            completarDesafio[0] = true;;
+            completarDesafioUsuario[0] = true;
         }
-        else if(mano[59] == "" && completarDesafio[0])
+        else if(manoJugador[59] == "" && completarDesafioUsuario[0])
         {
-            completarDesafio[0] = false;
+            completarDesafioUsuario[0] = false;
         }
-        else if(mano[59] != "" && completarDesafio[0])
+        else if(manoJugador[59] != "" && completarDesafioUsuario[0])
         {
-            completarDesafio[1] = true;
+            completarDesafioUsuario[1] = true;
         }
         break;
     }
+}
+void victDesafioCPU(int desafio, string manoCPU[], int completarDesafioCPU[], char numeroConsecutivo[], int vEstadisticasCPU[])
+{
+    int numActual = (int)manoCPU[59][0] - 49;
+    switch(desafio)
+    {
+    case 1:
+        if (manoCPU[59].find("NIEVE") != std::string::npos)
+        {
+            completarDesafioCPU[0] = true;
+            completarDesafioCPU[1] = true;
+        }
+        break;
+    case 2:
+        if (manoCPU[59].find("FUEGO") != std::string::npos)
+        {
+            completarDesafioCPU[0] = true;
+            completarDesafioCPU[1] = true;
+        }
+        break;
+    case 3:
+        if (manoCPU[59].find("AGUA") != std::string::npos)
+        {
+            completarDesafioCPU[0] = true;
+            completarDesafioCPU[1] = true;
+        }
+        break;
+    case 4:
 
+        if(manoCPU[59][3] == 'O' && manoCPU[59] != "")
+        {
+            if(!completarDesafioCPU[0])
+            {
+                completarDesafioCPU[0] = true;
+                cout << "CPU GANO 1 ROJA" << endl;
+                cout << "carta: " << manoCPU[59] << endl;
+                system("pause");
+            }
+            else
+            {
+                completarDesafioCPU[1] = true;
+                cout << "CPU GANO 2 ROJAS" << endl;
+                cout << "carta: " << manoCPU[59] << endl;
+                system("pause");
+            }
+        }
+        break;
+    case 5:
+        if(manoCPU[59][3] == 'M' && manoCPU[59] != "")
+        {
+            if(!completarDesafioCPU[0])
+            {
+                completarDesafioCPU[0] = true;
+                cout << "CPU GANO 1 AMARILLA" << endl;
+                cout << "carta: " << manoCPU[59] << endl;
+                system("pause");
+            }
+            else
+            {
+                completarDesafioCPU[1] = true;
+                cout << "CPU GANO 2 AMARILLAS" << endl;
+                cout << "carta: " << manoCPU[59] << endl;
+                system("pause");
+            }
+        }
+        break;
+    case 6:
+        if(manoCPU[59][3] == 'E' && manoCPU[59] != "")
+        {
+            if(!completarDesafioCPU[0])
+            {
+                completarDesafioCPU[0] = true;
+                cout << "CPU GANO 1 VERDE" << endl;
+                cout << "carta: " << manoCPU[59] << endl;
+                system("pause");
+            }
+            else
+            {
+                completarDesafioCPU[1] = true;
+                cout << "CPU GANO 2 VERDES" << endl;
+                cout << "carta: " << manoCPU[59] << endl;
+                system("pause");
+            }
+        }
+        break;
+    case 7:
+        if(manoCPU[59][3] == 'Z' && manoCPU[59] != "")
+        {
+            if(!completarDesafioCPU[0])
+            {
+                completarDesafioCPU[0] = true;
+                cout << "CPU GANO 1 AZUL" << endl;
+                cout << "carta: " << manoCPU[59] << endl;
+                system("pause");
+            }
+            else
+            {
+                completarDesafioCPU[1] = true;
+                cout << "CPU GANO 2 AZULES" << endl;
+                cout << "carta: " << manoCPU[59] << endl;
+                system("pause");
+            }
+        }
+        break;
+    case 8:
+        if (manoCPU[59] != "" && manoCPU[58].back() == manoCPU[59].back())
+        {
+            completarDesafioCPU[0] = true;
+            completarDesafioCPU[1] = true;
+        }
+        break;
+    case 9:
+        if(manoCPU[59] != "")
+        {
+            if(numeroConsecutivo[numActual] == '\0')
+            {
+                numeroConsecutivo[numActual] = manoCPU[59][0];
+            }
+            else
+            {
+                completarDesafioCPU[0] = true;
+                completarDesafioCPU[1] = true;
+            }
+        }
+        break;
+    case 10:
+        if(manoCPU[59] != "" && !completarDesafioCPU[0])
+        {
+            completarDesafioCPU[0] = true;;
+        }
+        else if(manoCPU[59] == "" && completarDesafioCPU[0])
+        {
+            completarDesafioCPU[0] = false;
+        }
+        else if(manoCPU[59] != "" && completarDesafioCPU[0])
+        {
+            completarDesafioCPU[1] = true;
+        }
+        break;
+    }
 }
 //Mismo que desafio, se pasan como parametro las estadisticas contrarias
 bool combinacionGanadora(string mano[])
@@ -803,9 +941,6 @@ bool combinacionGanadora(string mano[])
     }
     return false;
 }
-
-
-
 string devolverElemento(string carta)
 {
     string elemento;
@@ -823,8 +958,6 @@ string devolverElemento(string carta)
     }
     return elemento;
 }
-
-
 string devolverColor(string carta)
 {
     string color;
@@ -846,7 +979,6 @@ string devolverColor(string carta)
     }
     return color;
 }
-
 bool hayTresColores(string mano[], int tam)
 {
     int contadorColorRojo=0;
@@ -873,16 +1005,16 @@ bool hayTresColores(string mano[], int tam)
             contadorColorRojo+=1;
         }
     }
-    if ((contadorColorAzul==1 && contadorColorAmarillo==1 && contadorColorRojo==1) || (contadorColorAmarillo==1 && contadorColorRojo==1 &&
+    ///ME PARECE QUE LO QUE COMENTE ESTA DEMAS
+    if ((contadorColorAzul==1 && contadorColorAmarillo==1 && contadorColorRojo==1) /*|| (contadorColorAmarillo==1 && contadorColorRojo==1 &&
             contadorColorVerde==1) || (contadorColorVerde==1 && contadorColorRojo==1 && contadorColorAzul==1) || (contadorColorVerde==1 && contadorColorAmarillo==1 &&
-                    contadorColorAzul==1))
+                    contadorColorAzul==1)*/)
     {
         return true;
     }
     return false;
 }
-
-void mostrarHitos (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string ganadorPartida)
+void mostrarHitos (string nombre, int vEstadisticasJugador[], int vEstadisticasCPU[], string ganadorPartida, int vEstadisticasMayorPuntaje[], string nombreMaximo[])
 {
     int i;
     int acumulador=0, acumulador2=0;
@@ -922,7 +1054,6 @@ void mostrarHitos (string nombre, int vEstadisticasJugador[], int vEstadisticasC
         cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasJugador[4]<< " PDV "<<endl;
         cout << "-----------------------------------------------------------------------------------------------------"<<endl;
         cout << "TOTAL                                                             "<< acumulador2<<" PDV"<<endl;
-
     }
     else
     {
@@ -957,46 +1088,620 @@ void mostrarHitos (string nombre, int vEstadisticasJugador[], int vEstadisticasC
         cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasCPU[4]<< " PDV "<<endl;
         cout << "-----------------------------------------------------------------------------------------------------"<<endl;
         cout << "TOTAL                                                           "<< acumulador<<" PDV"<<endl;
-
-
+        ///PRUEBA ESTADISTICAS
+        guardarEstadisticas(acumulador2, vEstadisticasMayorPuntaje, nombre, nombreMaximo);
     }
-
 }
-
-void mostrarGanador (bool ganadorDesafioJugador, bool ganadorDesafioCPU, bool ganadorElementosJugador, bool ganadorElementosCPU, string nombre, string &ganadorPartida, int vEstadisticasCPU[], int vEstadisticasJugador[])
+void mostrarGanador (bool ganadorDesafioJugador, bool ganadorDesafioCPU, bool ganadorElementosJugador, bool ganadorElementosCPU, string nombre, string &ganadorPartida, int vEstadisticasCPU[], int vEstadisticasJugador[], int vEstadisticasMayorPuntaje[], string nombreMaximo[])
 {
-
     if (ganadorDesafioCPU && ganadorElementosCPU)
     {
         cout << "CPU GANO LA PARTIDA"<< endl;
         vEstadisticasCPU[0]+=3;
         ganadorPartida="CPU";
-        mostrarHitos ( nombre, vEstadisticasJugador,vEstadisticasCPU, ganadorPartida);
+        mostrarHitos ( nombre, vEstadisticasJugador,vEstadisticasCPU, ganadorPartida, vEstadisticasMayorPuntaje, nombreMaximo);
     }
-
-
     else if (ganadorDesafioJugador && ganadorElementosJugador)
     {
         cout << "FELICIDADES "<< nombre<< " GANASTE LA PARTIDA"<< endl;
         vEstadisticasJugador[0]+=3;
         ganadorPartida=nombre;
-        mostrarHitos (nombre, vEstadisticasJugador, vEstadisticasCPU, ganadorPartida);
-
+        mostrarHitos (nombre, vEstadisticasJugador, vEstadisticasCPU, ganadorPartida, vEstadisticasMayorPuntaje, nombreMaximo);
     }
-
 }
-
-void mostrarEstadisticas (int vEstadisticasMayorPuntaje[], int &mayorPuntaje, string nombre)
+void guardarEstadisticas(int acumulador2, int vEstadisticasMayorPuntaje[], string nombre, string nombreMaximo[])
+{
+    bool bandera=false;
+    for (int i=0; i<4; i++)
+    {
+        if (acumulador2 > vEstadisticasMayorPuntaje[i])
+        {
+            vEstadisticasMayorPuntaje[i+1] = vEstadisticasMayorPuntaje[i];
+            vEstadisticasMayorPuntaje[i] = acumulador2;
+            nombreMaximo[i+1] = nombreMaximo[i];
+            nombreMaximo[i] = nombre;
+            i=4;
+        }
+    }
+}
+void mostrarEstadisticas (int vEstadisticasMayorPuntaje[], string nombre, string nombreMaximo[])
 {
     int x;
+    /// AGREGO JUAN ---------------------------------------------------
+    rlutil::cls();
+    /// --------------- ---------------------------------------------------
+    cout << "MAYORES PUNTAJES                                   JUGADOR" << endl;
+    cout << "--------------------------------------------------------------"<<endl;
+    for (int i=0; i<5; i++)
+    {
+        if (vEstadisticasMayorPuntaje[i] != 0)
+        {
+            cout << vEstadisticasMayorPuntaje[i] << " PDV                                          " << nombreMaximo[i] << endl;
+            cout << "--------------------------------------------------------------"<<endl;
+        }
+    }
+    /// AGREGO JUAN ---------------------------------------------------
+    rlutil::setColor(8);
+    cout << "PRESIONA UNA TECLA PARA CONTINUAR" << endl;
+    rlutil::setColor(15);
+    rlutil::anykey();
+    rlutil::cls();
+    /// --------------- ---------------------------------------------------
+}
+string solicitarNombre()
+{
+    string n = {};
+    do
+    {
+        rlutil::setColor(15);
+        rlutil::cls();
+        rlutil::locate(5,5);
+        cout << "Ingresa tu nombre: ";
+        getline(cin, n);
+    }
+    while(n == "");
+    return n;
+}
+void confirmarNombre(string nombre)
+{
+    rlutil::cls();
+    int decision;
+    int y=0;
+    do
+    {
+        rlutil::setBackgroundColor(0);
+        //rlutil::setColor(14);
+        rlutil::locate(5,5);
+        cout << "INGRESASTE '" << nombre << "'";
+        rlutil::locate(5,6);
+        cout << "EL NOMBRE ES CORRECTO???";
+        rlutil::locate(5,8);
+        cout << "--------------------";
+        showItem("SI", 14, 9, y == 0);
+        showItem("NO", 14, 10, y == 1);
+        rlutil::locate(5,11);
+        cout << "--------------------";
+        ///MANEJO DE CURSOR
+        switch(rlutil::getkey())
+        {
+        case 14: //UP
+            Beep(1200,40);
+            rlutil::locate(14,9+y);
+            cout << " " << endl;
+            y--;
+            if (y<0)
+            {
+                y=0;
+            }
+            break;
+        case 15: // DOWN
+            Beep(1200,40);
+            rlutil::locate(14,9+y);
+            cout << " " << endl;
+            y++;
+            if (y>1)
+            {
+                y=1;
+            }
+            break;
+        case 1: // ENTER
+            switch(y)
+            {
+            case 0: // SI
+                decision = 1;
+                break;
+            case 1: // NO
+                nombre = solicitarNombre();
+                rlutil::cls();
+                break;
+            }
+            break;
+        }
+    }
+    while(decision != 1);
+    rlutil::cls();
+}
+void mostrarCreditos()
+{
 
-    cout << "MAYOR PUNTAJE HISTORICO                                                       JUGADOR: "<<nombre<<endl;
-    cout << "-----------------------------------------------------------------------------------------------------"<<endl;
-    cout << "GANADOR DE LA PARTIDA                                           " << vEstadisticasMayorPuntaje[0]<< " PDV"<<endl;
-    cout << "COMBINACION DE ELEMENTOS CUMPLIDOS POR EL CONTRARIO             " << vEstadisticasMayorPuntaje[1]<< " PDV"<<endl;
-    cout << "CARTA DESAFIO CUMPLIDO POR EL CONTRARIO                         " << vEstadisticasMayorPuntaje[2]<< " PDV "<<endl;
-    cout << "RONDAS GANADAS AL ADVERSARIO                                    " << vEstadisticasMayorPuntaje[3]<< " PDV "<<endl;
-    cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasMayorPuntaje[4]<< " PDV "<<endl;
-    cout << "-----------------------------------------------------------------------------------------------------"<<endl;
-    cout << "TOTAL                                                             "<<mayorPuntaje<<" PDV"<<endl;
+    int x=60;
+    rlutil::setColor(10);
+    rlutil::locate(x,5);
+    cout << "MMk.     lWMMMMX;      :NMMMMNc     .OMM" << endl;
+    rlutil::locate(x,6);
+    cout << "MM0,     '0MMMMX;      :NMMMMO'     ;KMM" << endl;
+    rlutil::locate(x,7);
+    cout << "MMWo.     ,OWMMX;      :NMMWO,     .dWMM" << endl;
+    rlutil::locate(x,8);
+    cout << "MMMXc      .l0WX;      :XW0c.      lNMMM" << endl;
+    rlutil::locate(x,9);
+    cout << "MMMMXl.      .;c.      .c,.      .lXMMMM" << endl;
+    rlutil::locate(x,10);
+    cout << "MMMMMNx'                        ,kWMMMMM" << endl;
+    rlutil::locate(x,11);
+    cout << "MMMMMMMXx;.                  .;xNMMMMMMM" << endl;
+    rlutil::locate(x,12);
+    cout << "MMWNNNNNNKkl,.            .,lkXNNNNNNWMM" << endl;
+    rlutil::locate(x,13);
+    cout << "MWk                                  kMM" << endl;
+    rlutil::locate(x,14);
+    cout << "MWo                                  dMM" << endl;
+    rlutil::locate(x,15);
+    cout << "MWd                                  dMM" << endl;
+    rlutil::locate(x,16);
+    cout << "MMKxdddddddl,.             ;ldddddddxKMM" << endl;
+    rlutil::locate(x,17);
+    cout << "MMMMMMMMNkc'                'cONMMMMMMMM" << endl;
+    rlutil::locate(x,18);
+    cout << "MMMMMMXx,                      ,xNMMMMMM" << endl;
+    rlutil::locate(x,19);
+    cout << "MMMMWO;        .        .        :0WMMMM" << endl;
+    rlutil::locate(x,20);
+    cout << "MMMWk.      .ckO;      ;Ok:.      'OWMMM" << endl;
+    rlutil::locate(x,21);
+    cout << "MMMO'     .cKWMX;      :NMW0c.     ,0MMM" << endl;
+    rlutil::locate(x,22);
+    cout << "MMX:     .dNMMMX;      :NMMMNo.     cNMM" << endl;
+    rlutil::locate(x,23);
+    cout << "MMO.     :XMMMMX;      :NMMMMX;     '0MM" << endl;
+    rlutil::locate(x,24);
+    cout << "MMx.     oWMMMMX:      cNMMMMWl     .kMM" << endl;
+    x = 10;
+    rlutil::locate(3,22);
+    cout << "PRESIONA CUALQUIER TECLA PARA REGRESAR AL MENU" << endl;
+    rlutil::setColor(15);
+    rlutil::locate(x,10);
+    cout << "---------CREADO POR------------" << endl;
+    rlutil::locate(15,12);
+    cout << "'CODEDESTROYERS666'" << endl;
+    rlutil::locate(x,14);
+    cout << "INTEGRANTES:" << endl;
+    rlutil::locate(x,16);
+    cout << "Juan Sarmiento" << endl;
+    rlutil::locate(x,17);
+    cout << "Jeremias Roldan Zocco" << endl;
+    rlutil::locate(x,18);
+    cout << "Fiorella Acosta" << endl;
+    rlutil::locate(x,19);
+    cout << "Juan Manuel Escobar" << endl;
+    rlutil::anykey();
+}
+void reglamento()
+{
+    cout << "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" << endl;
+    cout << "Una partida de Card Jitsu ++ debe jugarse con una serie de cartas especiales. " << endl;
+    cout << "El mismo dispone de dos tipos de mazos distintos que intervienen en distintas etapas del juego: " << endl;
+    cout << "uno de ellos es el mazo de cartas desafío y el otro es el mazo de cartas de elementos." << endl;
+    cout << "Las cartas desafío simplemente contienen un texto con el desafío a cumplir. En total existen " << endl;
+    cout << "diez cartas en el mazo de desafíos. Antes de comenzar una partida, cada jugador debe robar una carta del " << endl;
+    cout << "mazo de desafío y plantearse como objetivo cumplirlo cuanto antes." << endl;
+    cout << "Las cartas de elementos son las que hacen posible el transcurso de la partida. En primer lugar, " << endl;
+    cout << "son las que pueden marcar un desafío como cumplido y, por otro lado, son las que permiten transcurridas las diferentes " << endl;
+    cout << "manos del juego cumplir el segundo hito que finalice la partida." << endl;
+    cout << "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" << endl;
+    cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
+    if (rlutil::getkey()==1)
+    {
+        Beep(500,30);
+        rlutil::cls();
+        rlutil::setColor(11);
+        cout << "Mazo de cartas desafío" << endl;
+        cout << "El mazo de cartas desafío consta de diez cartas que deben ser robadas al comenzar la partida por cada jugador.  Cada carta desafío contiene uno de los dos hitos que el jugador debe completar para ganar la partida. El mazo contiene las siguientes cartas:" << endl;
+        cout << "" << endl;
+        cout << "" << endl;
+        cout << "1 - Ganar una carta de Nieve." << endl;
+        cout << "2 - Ganar una carta de Fuego." << endl;
+        cout << "3 - Ganar una carta de Agua." << endl;
+        cout << "4 - Ganar dos cartas rojas." << endl;
+        cout << "5 - Ganar dos cartas amarillas." << endl;
+        cout << "6 - Ganar dos cartas verdes." << endl;
+        cout << "7 - Ganar dos cartas azules." << endl;
+        cout << "8 - Ganar una carta con el mismo elemento que el adversario." << endl;
+        cout << "9 -Ganar dos cartas con el mismo número." << endl;
+        cout << "10 - Ganar dos rondas de manera consecutiva." << endl;
+        cout << "Ejemplo de una carta desafío" << endl;
+        cout << "Los desafíos de las diez cartas desafío" << endl;
+        cout << "" << endl;
+        cout << "" << endl;
+        cout << "Las cartas desafío son elegidas al comenzar la partida por cada jugador. Cada jugador conocerá únicamente su carta desafío y cumplirlo será excluyente para ganar la partida. " << endl;
+        cout << "" << endl;
+        rlutil::setColor(12);
+        rlutil::locate(70,40);
+        cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
+        if (rlutil::getkey()==1)
+        {
+            Beep(500,30);
+            rlutil::cls();
+            rlutil::setColor(12);
+            cout << "Mazo de cartas de elementos" << endl;
+            cout << "Otra parte del juego requiere el uso de este mazo de cartas. Estas cartas se caracterizan por tener un elemento (fuego, nieve o agua), un color (rojo, amarillo, verde y azul) y un número (de 1 a 5). En total son 60 naipes." << endl;
+            cout << "Estas cartas son necesarias para jugar en las rondas de elementos. " << endl;
+            cout << "" << endl;
+            cout << "" << endl;
+            cout << "" << endl;
+            cout << "Carta roja de fuego #5" << endl;
+            cout << "Carta azul de nieve #3" << endl;
+            cout << "Carta amarilla de agua #3" << endl;
+            cout << "" << endl;
+            cout << "" << endl;
+            cout << "Cada jugador comienza la partida con tres cartas de elementos repartidas al azar. Y podrá robar una de la pila en cada ronda. También, en cada ronda deberá jugar una para competir con la juegue su adversario. Esto quiere decir que puede recuperar la carta jugada y ganar la del adversario o bien perderla." << endl;
+            cout << "" << endl;
+            rlutil::setColor(13);
+            rlutil::locate(70,40);
+            cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
+            if (rlutil::getkey()==1)
+            {
+                Beep(500,30);
+                rlutil::cls();
+                rlutil::setColor(13);
+                cout << "Transcurso del juego" << endl;
+                cout << "El juego comienza con la etapa denominada Etapa de desafíos. Aquí, cada uno de los dos jugadores deberá tomar una carta de la pila de cartas desafíos y guardarla." << endl;
+                cout << "Luego, comienza la etapa denominada Etapa de elementos. Esta etapa no tiene una cantidad exacta de rondas sino que finaliza cuando uno de los jugadores logra cumplir dos circunstancias de juego:" << endl;
+                cout << "Lograr lo que su carta desafío indica" << endl;
+                cout << "Obtener una combinación de elementos ganadora" << endl;
+                cout << "" << endl;
+                cout << "Al comenzar la etapa de elementos, a cada jugador se le reparten tres cartas de la pila de cartas de elementos." << endl;
+                cout << "Luego, y en cada una de las rondas de esta etapa, los jugadores roban una carta de la pila de naipes de elementos. A continuación cada jugador juega una carta de elementos de su preferencia y se determina quien gana esa ronda. Para determinar esto se siguen las siguientes reglas:" << endl;
+                cout << "El fuego vence a la nieve" << endl;
+                cout << "La nieve vence al agua" << endl;
+                cout << "El agua vence al fuego" << endl;
+                cout << "" << endl;
+                cout << "Las anteriores reglas se cumplen indistintamente del color y número que tenga el naipe. Por ejemplo, cualquier carta de fuego #1 vence a cualquier carta de nieve #5." << endl;
+                cout << "Si las cartas jugadas en la ronda son del mismo elemento, se resuelve el ganador de la ronda con el valor numérico más alto. Por ejemplo, la carta de fuego #4 vence a la carta de fuego #2." << endl;
+                cout << "Luego de determinar el ganador de la ronda, ambas cartas pasan a ser parte de la mano del jugador que ganó. Esto significa que un jugador puede llegar a tener muchas cartas en su mano si gana muchas rondas. No obstante, un jugador nunca puede tener menos de tres cartas en su mano." << endl;
+                cout << "" << endl;
+                cout << "" << endl;
+                cout << "" << endl;
+                rlutil::setColor(14);
+                rlutil::locate(70,40);
+                cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
+                if (rlutil::getkey()==1)
+                {
+                    Beep(500,30);
+                    rlutil::cls();
+                    rlutil::setColor(14);
+                    cout << "Obtener una combinación de elementos ganadora" << endl;
+                    cout << "Para obtener una combinación de elementos ganadora, un jugador debe lograr alguna de las siguientes situaciones:" << endl;
+                    cout << "Tener tres cartas de distinto elemento y distinto color." << endl;
+                    cout << "Tener tres cartas del mismo elemento." << endl;
+                    cout << "" << endl;
+                    cout << "Por ejemplo, las siguientes situaciones logran una combinación ganadora de elementos:" << endl;
+                    cout << "Nieve #2 verde" << endl;
+                    cout << "Nieve #1 azul" << endl;
+                    cout << "Agua #3 azul" << endl;
+                    cout << "Fuego #5 amarillo" << endl;
+                    cout << "Nieve #2 verde" << endl;
+                    cout << "Nieve #3 amarillo" << endl;
+                    cout << "Fuego #4 azul" << endl;
+                    cout << "Fuego #2 azul" << endl;
+                    cout << "Agua #1 rojo" << endl;
+                    cout << "Nieve #1 azul" << endl;
+                    cout << "" << endl;
+                    cout << "" << endl;
+                    cout << "Obtener una combinación de elementos ganadora, sin embargo, no es sinónimo de haber ganado la partida. Para ganar la partida es necesario también cumplir el objetivo de la carta desafío. El primer jugador en obtener una combinación de elementos ganadora y cumplir el objetivo de su carta desafío gana la partida." << endl;
+                    cout << "" << endl;
+                    cout << "Una vez finalizada la partida, se determinan los puntos de victoria de la misma. Los mismos se calculan de la siguiente manera:" << endl;
+                    cout << "" << endl;
+                    cout << "+3 PDV por haber ganado la partida" << endl;
+                    cout << "-1 PDV si el contrario obtuvo una combinación de elementos ganadora" << endl;
+                    cout << "-1 PDV si el contrario cumplió el objetivo de su carta desafío" << endl;
+                    cout << "+1 PDV por cada ronda ganada en el juego al adversario" << endl;
+                    cout << "+5 PDV por cada ronda ganada en el juego con un elemento igual al del adversario" << endl;
+                    rlutil::setColor(2);
+                    rlutil::locate(70,40);
+                    cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
+                    rlutil::setColor(15);
+                    rlutil::anykey();
+                }
+            }
+        }
+    }
+}
+void logo ()
+{
+    int xcolumna;
+    rlutil::hidecursor();
+    rlutil::setBackgroundColor(rlutil::BLACK);
+    rlutil::setColor(rlutil::WHITE);
+    ///letra C
+    rlutil::locate(30, 3);
+    std::cout<< "******"<<std::endl;
+    //std::cout<< " "<<std::endl;
+    rlutil::locate(30, 4);
+    //std::cout<< " "<<std::endl;
+    std::cout<< "**"<<std::endl;
+    //std::cout<< " "<<std::endl;
+    rlutil::locate(30, 5);
+    //std::cout<< " "<<std::endl;
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(30, 6);
+    // std::cout<< " "<<std::endl;
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(30, 7);
+    // std::cout<< " "<<std::endl;
+    std::cout<< "******"<<std::endl;
+    ///LETRA A
+    rlutil::locate(37, 3);
+    std::cout<< "******"<<std::endl;
+    rlutil::locate(37, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(37, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(38, 5);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(37, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(37, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(41, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(41, 7);
+    std::cout<< "**"<<std::endl;
+    ///LETRA R
+    rlutil::locate(44, 3);
+    std::cout<< "****"<<std::endl;
+    rlutil::locate(44, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(44, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(44, 5);
+    std::cout<< "***"<<std::endl;
+    rlutil::locate(44, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(44, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(46, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(47, 3);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(47, 4);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(47, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(47, 6);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(47, 7);
+    std::cout<< " *"<<std::endl;
+    ///LETRA D
+    rlutil::locate(50, 3);
+    std::cout<< "****"<<std::endl;
+    rlutil::locate(50, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(50, 7);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(52, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(53, 4);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(53, 5);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(53, 6);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(52, 7);
+    std::cout<< "*"<<std::endl;
+    ///LETRA J
+    rlutil::locate(60, 3);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(63, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(63, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(63, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(63, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(60, 7);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(63, 5);
+    std::cout<< "*"<<std::endl;
+    ///LETRA I
+    rlutil::locate(66, 3);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(68, 4);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(68, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(68, 5);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(68, 6);
+    std::cout<< "*"<<std::endl;
+    rlutil::locate(66, 7);
+    std::cout<< "*****"<<std::endl;
+    //LETRA T
+    rlutil::locate(72, 3);
+    std::cout<< "******"<<std::endl;
+    rlutil::locate(74, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(74, 7);
+    std::cout<< "**"<<std::endl;
+    ///LETRA S
+    rlutil::locate(79, 3);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(79, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(79, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(79, 5);
+    std::cout<< "*****"<<std::endl;
+    rlutil::locate(82, 6);
+    std::cout<< " *"<<std::endl;
+    rlutil::locate(79, 7);
+    std::cout<< "*****"<<std::endl;
+    ///LETRA U
+    rlutil::locate(85, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(85, 7);
+    std::cout<< "*******"<<std::endl;
+    rlutil::locate(90, 3);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 4);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 5);
+    std::cout<< "**"<<std::endl;
+    rlutil::locate(90, 6);
+    std::cout<< "**"<<std::endl;
+    rlutil::setColor(rlutil::LIGHTCYAN);
+    rlutil::locate (96,3);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (96,4);
+    std::cout<< (char)197<<std::endl;
+    rlutil::locate (96,5);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (94,4);
+    std::cout<< (char)196<<std::endl;
+    rlutil::locate (98,4);
+    std::cout<< (char)196<<std::endl;
+    rlutil::locate (100,5);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (100,6);
+    std::cout<< (char)197<<std::endl;
+    rlutil::locate (100,7);
+    std::cout<< (char)179<<std::endl;
+    rlutil::locate (98,6);
+    std::cout<< (char)196<<std::endl;
+    rlutil::locate (102,6);
+    std::cout<< (char)196<<std::endl;
+    rlutil::setColor(rlutil::LIGHTCYAN);
+    for (xcolumna=22; xcolumna<=105; xcolumna++)
+    {
+        Sleep(20);
+        rlutil::locate (xcolumna,2);
+        std::cout<<(char)242;
+        rlutil::locate (xcolumna,8);
+        std::cout<<(char)242;
+    }
+}
+void box(int x,int y,int width, int height)
+{
+    width--;
+    height--;
+    for(int posx = x; posx <= x + width; posx++)
+    {
+        rlutil::locate(posx, y);
+        cout << (char)205;
+        rlutil::locate(posx,y+height);
+        cout << (char)205;
+    }
+    for(int posy = y; posy <= y + height; posy++)
+    {
+        rlutil::locate(x, posy);
+        cout << (char)186;
+        rlutil::locate(x+width, posy);
+        cout << (char)186;
+    }
+    rlutil::locate(x,y);
+    cout << (char)201;
+    rlutil::locate(x+width, y);
+    cout << (char)187;
+    rlutil::locate(x,y+height);
+    cout << (char)200;
+    rlutil::locate(x+width,y+height);
+    cout << (char)188;
+}
+void setColor(char color)
+{
+    switch(color)
+    {
+    case 'Z':
+        rlutil::setColor(9);
+        break;
+    case 'M':
+        rlutil::setColor(6);
+        break;
+    case 'O':
+        rlutil::setColor(4);
+        break;
+    case 'E':
+        rlutil::setColor(10);
+        break;
+    }
+}
+void drawCard(char number, char type, int x, int y, char color)
+{
+    setColor(color);
+    box(x,y,7,5);
+    rlutil::locate(x + 1, y + 1);
+    cout << number;
+    rlutil::locate(x + 5, y + 3);
+    cout << number;
+    rlutil::locate(x + 3, y + 2);
+    switch(type)
+    {
+    case 'O':
+        cout << "F";
+        break;
+    case 'E':
+        cout << "N";
+        break;
+    case 'A':
+        cout << "A";
+        break;
+    }
+    rlutil::setColor(15);
+}
+void showItem(const char* text, int posx, int posy, bool selected)
+{
+    if (selected)
+    {
+        rlutil::setBackgroundColor(1);
+        rlutil::locate(posx-4,posy);
+    }
+    else
+    {
+        rlutil::setBackgroundColor(0);
+        rlutil::locate(posx-4,posy);
+    }
+    rlutil::locate(posx,posy);
+    cout<< text << endl;
+    rlutil::setBackgroundColor(0);
 }

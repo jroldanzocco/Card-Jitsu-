@@ -1,29 +1,25 @@
 #include <iostream>
 #include <ctime>
 #include "rlutil.h"
-#include "card.h"
 #include "funciones.h"
-#include "configFunctions.h"
-using namespace std;;
+using namespace std;
+
 int main()
 {
-   srand(time(NULL));
+    srand(time(NULL));
     rlutil::hidecursor();
-
     //VARIABLES
     string nombreUsuario;
     int vEstadisticasMayorPuntaje[5]={};
+    string nombreMaximo[5]={};
     int puntajeJugador=0;
     int mayorPuntaje=0;
     bool jugar = true;
-   int op = 1, y = 0;
-   logo();
-    do{
-
-
+    int op = 1, y = 0;
+    /*logo();*/
+    do
+    {
         rlutil::setBackgroundColor(rlutil::BLACK);
-
-
         rlutil::setColor(rlutil::DARKGREY);
         rlutil::locate(40,10 );
         std::cout<< " JUGAR"<<std::endl;
@@ -35,42 +31,46 @@ int main()
         std::cout<< " REGLAS DEL JUEGO"<<std::endl;
         rlutil::locate(40,14 );
         std::cout << " SALIR"<< std::endl;
-
         rlutil::setColor(rlutil::WHITE);
-
         rlutil::locate(38,10+y);
         std::cout<<(char)175<< std::endl;
-
-        switch(rlutil::getkey()){
+        switch(rlutil::getkey())
+        {
         case 14: //UP
             rlutil::locate(38,10+y);
+            Beep(1000,60);
             cout << " " << endl;
             y--;
-            if(y < 0){
+            if(y < 0)
+            {
                 y = 4;
             }
             break;
         case 15: //DOWN
             rlutil::locate(38,10+y);
+            Beep(1000,60);
             cout << " " << endl;
             y++;
-            if(y > 4){
+            if(y > 4)
+            {
                 y = 0;
             }
             break;
         case 1: //ENTER
-            switch(y+1){
+            switch(y+1)
+            {
             case 1:
                 rlutil::cls();
-
-                do{
-                nombreUsuario = solicitarNombre();
-                confirmarNombre(nombreUsuario);
-                }while(nombreUsuario == "");
-                ronda(1, nombreUsuario, jugar);
+                do
+                {
+                    nombreUsuario = solicitarNombre();
+                    confirmarNombre(nombreUsuario);
+                }
+                while(nombreUsuario == "");
+                ronda(1, nombreUsuario, jugar, vEstadisticasMayorPuntaje, nombreMaximo);
                 break;
             case 2:
-                 mostrarEstadisticas(vEstadisticasMayorPuntaje, mayorPuntaje,nombreUsuario);
+                mostrarEstadisticas(vEstadisticasMayorPuntaje,nombreUsuario, nombreMaximo);
                 break;
             case 3:
                 rlutil::cls();
@@ -85,17 +85,12 @@ int main()
             case 5:
                 op = 0;
                 break;
-
             }
         default:
             break;
         }
-
-
-
-    }while(op != 0);
-
-
+    }
+    while(op != 0);
+    rlutil::setColor(0);
     return 0;
 }
-

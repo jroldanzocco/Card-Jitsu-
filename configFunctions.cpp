@@ -3,7 +3,6 @@
 #include "rlutil.h"
 #include "card.h"
 #include "funciones.h"
-#include "configFunctions.h"
 using namespace std;
 
 string solicitarNombre()
