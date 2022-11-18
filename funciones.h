@@ -1,6 +1,6 @@
-#pragma once
+#ifndef AFD_H_INCLUDED
+#define AFD_H_INCLUDED
 using  namespace std;
-
 void logo ();
 void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaje[],  string nombreMaximo[]);
 int asignarDesafio(int desafioAnterior);
@@ -38,3 +38,4 @@ void reglamento();
 void box(int x,int y ,int width, int height);
 void drawCard(char number, char type, int x, int y, char color);
 void showItem(const char* text, int posx, int posy, bool selected);
+#endif // AFD_H_INCLUDED

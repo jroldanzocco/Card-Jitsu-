@@ -3,7 +3,6 @@
 #include "rlutil.h"
 #include "funciones.h"
 using namespace std;
-
 int main()
 {
     srand(time(NULL));
@@ -16,7 +15,7 @@ int main()
     int mayorPuntaje=0;
     bool jugar = true;
     int op = 1, y = 0;
-    /*logo();*/
+    logo();
     do
     {
         rlutil::setBackgroundColor(rlutil::BLACK);
@@ -38,7 +37,6 @@ int main()
         {
         case 14: //UP
             rlutil::locate(38,10+y);
-            Beep(1000,60);
             cout << " " << endl;
             y--;
             if(y < 0)
@@ -48,7 +46,6 @@ int main()
             break;
         case 15: //DOWN
             rlutil::locate(38,10+y);
-            Beep(1000,60);
             cout << " " << endl;
             y++;
             if(y > 4)

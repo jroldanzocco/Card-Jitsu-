@@ -3,25 +3,23 @@
 #include "rlutil.h"
 #include "funciones.h"
 using namespace std;
-
 void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaje[],  string nombreMaximo[])
 {
-    ///DECLARACION DE VARIABLES
+    int numeroRonda=1;
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
     int desafioUsuario = asignarDesafio(0);
     int desafioCPU = asignarDesafio(desafioUsuario);
+    ///------------------
     int mayorPuntaje;
     string ganadorPartida;
     bool ganadorElementosCPU = false, ganadorElementosJugador = false, ganadorDesafioJugador = false, ganadorDesafioCPU = false;
+    bool auxCombinacionGanadoraJugador=false;
+    bool auxCombinacionGanadoraCPU=false;
     int vEstadisticasCPU[5]= {};
     int vEstadisticasJugador[5]= {};
-
-
-    ///LLAMADO A FUNCIONES
     crearMazo(mazo);
     mezclarMazo(mazo, 60);
     asignarCartas(mazo, manoJugador, manoCPU);
-    ///INICIALIZACION
     int contadorDesafioUsuario[2]= {};
     int contadorDesafioCPU[2] = {};
     char numeroDesafioNueve[5] = {};
@@ -32,6 +30,8 @@ void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaj
     rlutil::cls();
     do
     {
+        rlutil::locate(20,1);
+        cout << "Ronda #" << numeroRonda << endl;
         if(!cartaRobada)
         {
             rlutil::locate(5,5);
@@ -69,7 +69,7 @@ void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaj
                     rlutil::cls();
                     rlutil::locate(5,5);
                     cout << mostrarDesafio(desafioUsuario) << endl;
-                    ///SOLO DE PRUEBA
+                    ///SOLO DE PRUEBA - COMENTAR!!!
                     rlutil::locate(5,6);
                     cout << mostrarDesafio(desafioCPU) << endl;
                     ///-------------------
@@ -162,10 +162,8 @@ void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaj
                     {
                         ganadorDesafioJugador = true;
                         vEstadisticasCPU[2]-=1;
-                        ///PRUEBA
                         contadorDesafioUsuario[2]= {};
                         contadorDesafioCPU[2] = {};
-                        ///------------------------------
                     }
                     if(contadorDesafioCPU[0] && contadorDesafioCPU[1])
                     {
@@ -173,13 +171,15 @@ void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaj
                         vEstadisticasJugador[2]-=1;
                     }
 
-                    if(combinacionGanadora(manoCPU))
+                    if(combinacionGanadora(manoCPU)&&!auxCombinacionGanadoraCPU)
                     {
                         vEstadisticasJugador[1]-=1;
+                        auxCombinacionGanadoraCPU=true;
                     }
-                    if(combinacionGanadora(manoJugador))
+                    if(combinacionGanadora(manoJugador)&&!auxCombinacionGanadoraJugador)
                     {
                         vEstadisticasCPU[1]-=1;
+                        auxCombinacionGanadoraJugador=true;
                     }
                     rlutil::anykey();
                     if((ganadorDesafioJugador && ganadorElementosJugador) || (ganadorDesafioCPU && ganadorElementosCPU))
@@ -190,6 +190,7 @@ void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaj
                     cartaRobada = false;
                     break;
                 }
+                numeroRonda++;
             }
         }
     }
@@ -625,8 +626,6 @@ void empate(string manoJugador[],string manoCPU[],string cartasJugadas[])
     manoJugador[58] = cartasJugadas[0];
     manoCPU[58] = cartasJugadas[1];
 }
-//En estadisticas debe ir la mano del adversario, es decir, para comprobar desafio usuario se utiliza estadisticasCPU
-//y viceversa
 void victDesafioJugador(int desafio, string manoJugador[], int completarDesafioUsuario[], char numeroConsecutivo[], int vEstadisticas[])
 {
     int numActual = (int)manoJugador[59][0] - 49;
@@ -907,7 +906,6 @@ void victDesafioCPU(int desafio, string manoCPU[], int completarDesafioCPU[], ch
         break;
     }
 }
-//Mismo que desafio, se pasan como parametro las estadisticas contrarias
 bool combinacionGanadora(string mano[])
 {
     //Tener tres cartas del mismo elemento
@@ -1088,7 +1086,6 @@ void mostrarHitos (string nombre, int vEstadisticasJugador[], int vEstadisticasC
         cout << "RONDAS GANADAS AL ADVERSARIO CON IGUAL ELEMENTO                 " << vEstadisticasCPU[4]<< " PDV "<<endl;
         cout << "-----------------------------------------------------------------------------------------------------"<<endl;
         cout << "TOTAL                                                           "<< acumulador<<" PDV"<<endl;
-        ///PRUEBA ESTADISTICAS
         guardarEstadisticas(acumulador2, vEstadisticasMayorPuntaje, nombre, nombreMaximo);
     }
 }
@@ -1127,9 +1124,7 @@ void guardarEstadisticas(int acumulador2, int vEstadisticasMayorPuntaje[], strin
 void mostrarEstadisticas (int vEstadisticasMayorPuntaje[], string nombre, string nombreMaximo[])
 {
     int x;
-    /// AGREGO JUAN ---------------------------------------------------
     rlutil::cls();
-    /// --------------- ---------------------------------------------------
     cout << "MAYORES PUNTAJES                                   JUGADOR" << endl;
     cout << "--------------------------------------------------------------"<<endl;
     for (int i=0; i<5; i++)
@@ -1140,13 +1135,12 @@ void mostrarEstadisticas (int vEstadisticasMayorPuntaje[], string nombre, string
             cout << "--------------------------------------------------------------"<<endl;
         }
     }
-    /// AGREGO JUAN ---------------------------------------------------
+    rlutil::locate(1,15);
     rlutil::setColor(8);
-    cout << "PRESIONA UNA TECLA PARA CONTINUAR" << endl;
+    cout << "PRESIONA UNA TECLA PARA VOLVER" << endl;
     rlutil::setColor(15);
     rlutil::anykey();
     rlutil::cls();
-    /// --------------- ---------------------------------------------------
 }
 string solicitarNombre()
 {
@@ -1185,7 +1179,6 @@ void confirmarNombre(string nombre)
         switch(rlutil::getkey())
         {
         case 14: //UP
-            Beep(1200,40);
             rlutil::locate(14,9+y);
             cout << " " << endl;
             y--;
@@ -1195,7 +1188,6 @@ void confirmarNombre(string nombre)
             }
             break;
         case 15: // DOWN
-            Beep(1200,40);
             rlutil::locate(14,9+y);
             cout << " " << endl;
             y++;
@@ -1223,7 +1215,6 @@ void confirmarNombre(string nombre)
 }
 void mostrarCreditos()
 {
-
     int x=60;
     rlutil::setColor(10);
     rlutil::locate(x,5);
@@ -1302,7 +1293,6 @@ void reglamento()
     cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
     if (rlutil::getkey()==1)
     {
-        Beep(500,30);
         rlutil::cls();
         rlutil::setColor(11);
         cout << "Mazo de cartas desafío" << endl;
@@ -1330,7 +1320,6 @@ void reglamento()
         cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
         if (rlutil::getkey()==1)
         {
-            Beep(500,30);
             rlutil::cls();
             rlutil::setColor(12);
             cout << "Mazo de cartas de elementos" << endl;
@@ -1351,7 +1340,6 @@ void reglamento()
             cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
             if (rlutil::getkey()==1)
             {
-                Beep(500,30);
                 rlutil::cls();
                 rlutil::setColor(13);
                 cout << "Transcurso del juego" << endl;
@@ -1377,7 +1365,6 @@ void reglamento()
                 cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
                 if (rlutil::getkey()==1)
                 {
-                    Beep(500,30);
                     rlutil::cls();
                     rlutil::setColor(14);
                     cout << "Obtener una combinación de elementos ganadora" << endl;
@@ -1421,205 +1408,196 @@ void logo ()
 {
     int xcolumna;
     rlutil::hidecursor();
-    rlutil::setBackgroundColor(rlutil::BLACK);
-    rlutil::setColor(rlutil::WHITE);
     ///letra C
     rlutil::locate(30, 3);
-    std::cout<< "******"<<std::endl;
-    //std::cout<< " "<<std::endl;
+    cout<< "******"<<std::endl;
     rlutil::locate(30, 4);
-    //std::cout<< " "<<std::endl;
-    std::cout<< "**"<<std::endl;
-    //std::cout<< " "<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(30, 5);
-    //std::cout<< " "<<std::endl;
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(30, 6);
-    // std::cout<< " "<<std::endl;
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(30, 7);
-    // std::cout<< " "<<std::endl;
-    std::cout<< "******"<<std::endl;
+    cout<< "******"<<std::endl;
     ///LETRA A
     rlutil::locate(37, 3);
-    std::cout<< "******"<<std::endl;
+    cout<< "******"<<std::endl;
     rlutil::locate(37, 4);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(37, 5);
-    std::cout<< "*"<<std::endl;
+    cout<< "*"<<std::endl;
     rlutil::locate(38, 5);
-    std::cout<< "*****"<<std::endl;
+    cout<< "*****"<<std::endl;
     rlutil::locate(37, 6);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(37, 7);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(41, 3);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(41, 4);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(41, 5);
-    std::cout<< "*"<<std::endl;
+    cout<< "*"<<std::endl;
     rlutil::locate(41, 6);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(41, 7);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     ///LETRA R
     rlutil::locate(44, 3);
-    std::cout<< "****"<<std::endl;
+    cout<< "****"<<std::endl;
     rlutil::locate(44, 4);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(44, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(44, 5);
-    std::cout<< "***"<<std::endl;
+    cout<< "***"<<std::endl;
     rlutil::locate(44, 6);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(44, 7);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(46, 3);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(47, 3);
-    std::cout<< " *"<<std::endl;
+    cout<< " *"<<std::endl;
     rlutil::locate(47, 4);
-    std::cout<< " *"<<std::endl;
+    cout<< " *"<<std::endl;
     rlutil::locate(47, 5);
-    std::cout<< "*"<<std::endl;
+    cout<< "*"<<std::endl;
     rlutil::locate(47, 6);
-    std::cout<< " *"<<std::endl;
+    cout<< " *"<<std::endl;
     rlutil::locate(47, 7);
-    std::cout<< " *"<<std::endl;
+    cout<< " *"<<std::endl;
     ///LETRA D
     rlutil::locate(50, 3);
-    std::cout<< "****"<<std::endl;
+    cout<< "****"<<std::endl;
     rlutil::locate(50, 4);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(50, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(50, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(50, 6);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(50, 7);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(50, 7);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(52, 3);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(53, 4);
-    std::cout<< " *"<<std::endl;
+    cout<< " *"<<std::endl;
     rlutil::locate(53, 5);
-    std::cout<< " *"<<std::endl;
+    cout<< " *"<<std::endl;
     rlutil::locate(53, 6);
-    std::cout<< " *"<<std::endl;
+    cout<< " *"<<std::endl;
     rlutil::locate(52, 7);
-    std::cout<< "*"<<std::endl;
+    cout<< "*"<<std::endl;
     ///LETRA J
     rlutil::locate(60, 3);
-    std::cout<< "*****"<<std::endl;
+    cout<< "*****"<<std::endl;
     rlutil::locate(63, 4);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(63, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(63, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(63, 6);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(60, 7);
-    std::cout<< "*****"<<std::endl;
+    cout<< "*****"<<std::endl;
     rlutil::locate(63, 5);
-    std::cout<< "*"<<std::endl;
+    cout<< "*"<<std::endl;
     ///LETRA I
     rlutil::locate(66, 3);
-    std::cout<< "*****"<<std::endl;
+    cout<< "*****"<<std::endl;
     rlutil::locate(68, 4);
-    std::cout<< "*"<<std::endl;
+    cout<< "*"<<std::endl;
     rlutil::locate(68, 5);
-    std::cout<< "*"<<std::endl;
+    cout<< "*"<<std::endl;
     rlutil::locate(68, 5);
-    std::cout<< "*"<<std::endl;
+    cout<< "*"<<std::endl;
     rlutil::locate(68, 6);
-    std::cout<< "*"<<std::endl;
+    cout<< "*"<<std::endl;
     rlutil::locate(66, 7);
-    std::cout<< "*****"<<std::endl;
+    cout<< "*****"<<std::endl;
     //LETRA T
     rlutil::locate(72, 3);
-    std::cout<< "******"<<std::endl;
+    cout<< "******"<<std::endl;
     rlutil::locate(74, 4);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(74, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(74, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(74, 6);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(74, 7);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     ///LETRA S
     rlutil::locate(79, 3);
-    std::cout<< "*****"<<std::endl;
+    cout<< "*****"<<std::endl;
     rlutil::locate(79, 4);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(79, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(79, 5);
-    std::cout<< "*****"<<std::endl;
+    cout<< "*****"<<std::endl;
     rlutil::locate(82, 6);
-    std::cout<< " *"<<std::endl;
+    cout<< " *"<<std::endl;
     rlutil::locate(79, 7);
-    std::cout<< "*****"<<std::endl;
+    cout<< "*****"<<std::endl;
     ///LETRA U
     rlutil::locate(85, 3);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(85, 4);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(85, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(85, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(85, 6);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(85, 7);
-    std::cout<< "*******"<<std::endl;
+    cout<< "*******"<<std::endl;
     rlutil::locate(90, 3);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(90, 4);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(90, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(90, 5);
-    std::cout<< "**"<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::locate(90, 6);
-    std::cout<< "**"<<std::endl;
-    rlutil::setColor(rlutil::LIGHTCYAN);
-    rlutil::locate (96,3);
-    std::cout<< (char)179<<std::endl;
-    rlutil::locate (96,4);
-    std::cout<< (char)197<<std::endl;
-    rlutil::locate (96,5);
-    std::cout<< (char)179<<std::endl;
-    rlutil::locate (94,4);
-    std::cout<< (char)196<<std::endl;
-    rlutil::locate (98,4);
-    std::cout<< (char)196<<std::endl;
-    rlutil::locate (100,5);
-    std::cout<< (char)179<<std::endl;
-    rlutil::locate (100,6);
-    std::cout<< (char)197<<std::endl;
-    rlutil::locate (100,7);
-    std::cout<< (char)179<<std::endl;
-    rlutil::locate (98,6);
-    std::cout<< (char)196<<std::endl;
-    rlutil::locate (102,6);
-    std::cout<< (char)196<<std::endl;
+    cout<< "**"<<std::endl;
     rlutil::setColor(rlutil::LIGHTCYAN);
     for (xcolumna=22; xcolumna<=105; xcolumna++)
     {
-        Sleep(20);
+        rlutil::msleep(7);
         rlutil::locate (xcolumna,2);
-        std::cout<<(char)242;
+        cout<<(char)242;
         rlutil::locate (xcolumna,8);
-        std::cout<<(char)242;
+        cout<<(char)242;
     }
+    rlutil::locate (96,3);
+    cout<< (char)179<<std::endl;
+    rlutil::locate (96,4);
+    cout<< (char)197<<std::endl;
+    rlutil::locate (96,5);
+    cout<< (char)179<<std::endl;
+    rlutil::locate (94,4);
+    cout<< (char)196<<std::endl;
+    rlutil::locate (98,4);
+    cout<< (char)196<<std::endl;
+    rlutil::locate (100,5);
+    cout<< (char)179<<std::endl;
+    rlutil::locate (100,6);
+    cout<< (char)197<<std::endl;
+    rlutil::locate (100,7);
+    cout<< (char)179<<std::endl;
+    rlutil::locate (98,6);
+    cout<< (char)196<<std::endl;
+    rlutil::locate (102,6);
+    cout<< (char)196<<std::endl;
 }
 void box(int x,int y,int width, int height)
 {
