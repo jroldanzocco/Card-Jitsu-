@@ -606,21 +606,56 @@ void condicionDeVictRonda(string cartasJugadas[], string nombre, string manoJuga
         }
     }
 }
+
 void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsuario, int vEstadisticas[])
 {
+    int x;
     if(ganoUsuario)
     {
         manoGanadora[58] = cartasJugadas[0];
         manoGanadora[59] = cartasJugadas[1];
         vEstadisticas[3]+=1;
+        for (x=0; x<1; x++)
+        {
+            if (cartasJugadas[x].find("FUEGO")!=std::string::npos && cartasJugadas[x+1].find("FUEGO")!=std::string::npos)
+            {
+                vEstadisticas[4]+=1;
+            }
+            else if (cartasJugadas[x].find("AGUA")!=std::string::npos && cartasJugadas[x+1].find("AGUA")!=std::string::npos)
+            {
+                vEstadisticas[4]+=1;
+            }
+            else if (cartasJugadas[x].find("NIEVE")!=std::string::npos && cartasJugadas[x+1].find("NIEVE")!=std::string::npos)
+            {
+                vEstadisticas[4]+=1;
+            }
+        }
+
     }
     else
     {
         manoGanadora[58] = cartasJugadas[1];
         manoGanadora[59] = cartasJugadas[0];
         vEstadisticas[3]+=1;
+        for (x=0; x<1; x++)
+        {
+            if (cartasJugadas[x].find("FUEGO")!=std::string::npos && cartasJugadas[x+1].find("FUEGO")!=std::string::npos)
+            {
+                vEstadisticas[4]+=1;
+            }
+            else if (cartasJugadas[x].find("AGUA")!=std::string::npos && cartasJugadas[x+1].find("AGUA")!=std::string::npos)
+            {
+                vEstadisticas[4]+=1;
+            }
+            else if (cartasJugadas[x].find("NIEVE")!=std::string::npos && cartasJugadas[x+1].find("NIEVE")!=std::string::npos)
+            {
+                vEstadisticas[4]+=1;
+            }
+        }
     }
 }
+
+
 void empate(string manoJugador[],string manoCPU[],string cartasJugadas[])
 {
     manoJugador[58] = cartasJugadas[0];
