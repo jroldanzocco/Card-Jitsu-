@@ -8,9 +8,8 @@ void partida(string nombre, int vEstadisticasMayorPuntaje[],  string nombreMaxim
     bool jugar = true;
     int numeroRonda=1;
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
-    int desafioUsuario = 1;
+    int desafioUsuario = asignarDesafio(0);
     int desafioCPU = asignarDesafio(desafioUsuario);
-    ///------------------
     int mayorPuntaje;
     string ganadorPartida;
     bool ganadorElementosCPU = false, ganadorElementosJugador = false, ganadorDesafioJugador = false, ganadorDesafioCPU = false;
@@ -74,10 +73,6 @@ void partida(string nombre, int vEstadisticasMayorPuntaje[],  string nombreMaxim
                     rlutil::cls();
                     rlutil::locate(5,5);
                     cout << mostrarDesafio(desafioUsuario) << endl;
-                    ///SOLO DE PRUEBA - COMENTAR!!!
-                    rlutil::locate(5,6);
-                    cout << mostrarDesafio(desafioCPU) << endl;
-                    ///-------------------
                     rlutil::locate(5, 10);
                     cout << "Presione una tecla para volver...";
                     rlutil::anykey();
@@ -531,7 +526,6 @@ void ordenamientoDeManos(string manoGeneral[])
     {
         manoGeneral[i] = auxiliar[i];
     }
-    //manoOriginal 0,1,2,58,59 ->> manoAux = 0,1,2,3,4 -->> manoOriginal ->> 0,1,2,3,4
 }
 void acomodarCartasEnPantalla(bool pos[][8], string mano[])
 {
@@ -699,16 +693,10 @@ void victDesafioJugador(int desafio, string manoJugador[], int completarDesafioU
             if(!completarDesafioUsuario[0])
             {
                 completarDesafioUsuario[0] = true;
-                cout << "JUGADOR GANO 1 ROJA" << endl;
-                cout << "carta: " << manoJugador[59] << endl;
-                system("pause");
             }
             else
             {
                 completarDesafioUsuario[1] = true;
-                cout << "JUGADOR GANO 2 ROJAS" << endl;
-                cout << "carta: " << manoJugador[59] << endl;
-                system("pause");
             }
         }
         break;
@@ -718,16 +706,10 @@ void victDesafioJugador(int desafio, string manoJugador[], int completarDesafioU
             if(!completarDesafioUsuario[0])
             {
                 completarDesafioUsuario[0] = true;
-                cout << "JUGADOR GANO 1 AMARILLA" << endl;
-                cout << "carta: " << manoJugador[59] << endl;
-                system("pause");
             }
             else
             {
                 completarDesafioUsuario[1] = true;
-                cout << "JUGADOR GANO 2 AMARILLA" << endl;
-                cout << "carta: " << manoJugador[59] << endl;
-                system("pause");
             }
         }
         break;
@@ -737,16 +719,10 @@ void victDesafioJugador(int desafio, string manoJugador[], int completarDesafioU
             if(!completarDesafioUsuario[0])
             {
                 completarDesafioUsuario[0] = true;
-                cout << "JUGADOR GANO 1 VERDE" << endl;
-                cout << "carta: " << manoJugador[59] << endl;
-                system("pause");
             }
             else
             {
                 completarDesafioUsuario[1] = true;
-                cout << "JUGADOR GANO 2 VERDES" << endl;
-                cout << "carta: " << manoJugador[59] << endl;
-                system("pause");
             }
         }
         break;
@@ -756,16 +732,10 @@ void victDesafioJugador(int desafio, string manoJugador[], int completarDesafioU
             if(!completarDesafioUsuario[0])
             {
                 completarDesafioUsuario[0] = true;
-                cout << "JUGADOR GANO 1 AZUL" << endl;
-                cout << "carta: " << manoJugador[59] << endl;
-                system("pause");
             }
             else
             {
                 completarDesafioUsuario[1] = true;
-                cout << "JUGADOR GANO 2 AZULES" << endl;
-                cout << "carta: " << manoJugador[59] << endl;
-                system("pause");
             }
         }
         break;

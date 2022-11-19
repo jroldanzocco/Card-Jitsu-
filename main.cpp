@@ -13,7 +13,6 @@ int main()
     string nombreMaximo[5]={};
     int puntajeJugador=0;
     int mayorPuntaje=0;
-    bool jugar = true;
     int op = 1, y = 0;
     logo(true);
     do
