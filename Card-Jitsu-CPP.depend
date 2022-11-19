@@ -20,15 +20,15 @@
 	<sys/types.h>
 	<sys/time.h>
 
-1668830289 source:c:\users\jere\documents\github\card-jitsu-\main.cpp
+1668849825 source:c:\users\jere\documents\github\card-jitsu-\main.cpp
 	<iostream>
 	<ctime>
 	"rlutil.h"
 	"funciones.h"
 
-1668829692 c:\users\jere\documents\github\card-jitsu-\funciones.h
+1668849825 c:\users\jere\documents\github\card-jitsu-\funciones.h
 
-1668830289 source:c:\users\jere\documents\github\card-jitsu-\funciones.cpp
+1668851842 source:c:\users\jere\documents\github\card-jitsu-\funciones.cpp
 	<iostream>
 	<ctime>
 	"rlutil.h"

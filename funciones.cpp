@@ -10,7 +10,6 @@ void partida(string nombre, int vEstadisticasMayorPuntaje[],  string nombreMaxim
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
     int desafioUsuario = asignarDesafio(0);
     int desafioCPU = asignarDesafio(desafioUsuario);
-    int mayorPuntaje;
     string ganadorPartida;
     bool ganadorElementosCPU = false, ganadorElementosJugador = false, ganadorDesafioJugador = false, ganadorDesafioCPU = false;
     bool auxCombinacionGanadoraJugador=false;
@@ -23,7 +22,6 @@ void partida(string nombre, int vEstadisticasMayorPuntaje[],  string nombreMaxim
     int contadorDesafioUsuario[2]= {};
     int contadorDesafioCPU[2] = {};
     char numeroDesafioNueve[5] = {};
-    int completarDesafio[2]= {};
     int y = 0;
     bool cartaRobada = false;
     ///--------------------
@@ -1093,7 +1091,6 @@ void mostrarGanador (bool ganadorDesafioJugador, bool ganadorDesafioCPU, bool ga
 }
 void guardarEstadisticas(int acumulador2, int vEstadisticasMayorPuntaje[], string nombre, string nombreMaximo[])
 {
-    bool bandera=false;
     int aux;
     string aux2;
     for (int i=0; i<5; i++)
@@ -1123,7 +1120,6 @@ void guardarEstadisticas(int acumulador2, int vEstadisticasMayorPuntaje[], strin
 }
 void mostrarEstadisticas (int vEstadisticasMayorPuntaje[], string nombre, string nombreMaximo[])
 {
-    int x;
     rlutil::cls();
     cout << "MAYORES PUNTAJES                                   JUGADOR" << endl;
     cout << "--------------------------------------------------------------"<<endl;
@@ -1279,130 +1275,151 @@ void mostrarCreditos()
 }
 void reglamento()
 {
-    cout << "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" << endl;
-    cout << "Una partida de Card Jitsu ++ debe jugarse con una serie de cartas especiales. " << endl;
-    cout << "El mismo dispone de dos tipos de mazos distintos que intervienen en distintas etapas del juego: " << endl;
-    cout << "uno de ellos es el mazo de cartas desafío y el otro es el mazo de cartas de elementos." << endl;
-    cout << "Las cartas desafío simplemente contienen un texto con el desafío a cumplir. En total existen " << endl;
-    cout << "diez cartas en el mazo de desafíos. Antes de comenzar una partida, cada jugador debe robar una carta del " << endl;
-    cout << "mazo de desafío y plantearse como objetivo cumplirlo cuanto antes." << endl;
-    cout << "Las cartas de elementos son las que hacen posible el transcurso de la partida. En primer lugar, " << endl;
-    cout << "son las que pueden marcar un desafío como cumplido y, por otro lado, son las que permiten transcurridas las diferentes " << endl;
-    cout << "manos del juego cumplir el segundo hito que finalice la partida." << endl;
-    cout << "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" << endl;
-    cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
-    if (rlutil::getkey()==1)
-    {
-        rlutil::cls();
-        rlutil::setColor(11);
-        cout << "Mazo de cartas desafío" << endl;
-        cout << "El mazo de cartas desafío consta de diez cartas que deben ser robadas al comenzar la partida por cada jugador.  Cada carta desafío contiene uno de los dos hitos que el jugador debe completar para ganar la partida. El mazo contiene las siguientes cartas:" << endl;
-        cout << "" << endl;
-        cout << "" << endl;
-        cout << "1 - Ganar una carta de Nieve." << endl;
-        cout << "2 - Ganar una carta de Fuego." << endl;
-        cout << "3 - Ganar una carta de Agua." << endl;
-        cout << "4 - Ganar dos cartas rojas." << endl;
-        cout << "5 - Ganar dos cartas amarillas." << endl;
-        cout << "6 - Ganar dos cartas verdes." << endl;
-        cout << "7 - Ganar dos cartas azules." << endl;
-        cout << "8 - Ganar una carta con el mismo elemento que el adversario." << endl;
-        cout << "9 -Ganar dos cartas con el mismo número." << endl;
-        cout << "10 - Ganar dos rondas de manera consecutiva." << endl;
-        cout << "Ejemplo de una carta desafío" << endl;
-        cout << "Los desafíos de las diez cartas desafío" << endl;
-        cout << "" << endl;
-        cout << "" << endl;
-        cout << "Las cartas desafío son elegidas al comenzar la partida por cada jugador. Cada jugador conocerá únicamente su carta desafío y cumplirlo será excluyente para ganar la partida. " << endl;
-        cout << "" << endl;
-        rlutil::setColor(12);
-        rlutil::locate(70,40);
-        cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
-        if (rlutil::getkey()==1)
-        {
-            rlutil::cls();
-            rlutil::setColor(12);
-            cout << "Mazo de cartas de elementos" << endl;
-            cout << "Otra parte del juego requiere el uso de este mazo de cartas. Estas cartas se caracterizan por tener un elemento (fuego, nieve o agua), un color (rojo, amarillo, verde y azul) y un número (de 1 a 5). En total son 60 naipes." << endl;
-            cout << "Estas cartas son necesarias para jugar en las rondas de elementos. " << endl;
-            cout << "" << endl;
-            cout << "" << endl;
-            cout << "" << endl;
-            cout << "Carta roja de fuego #5" << endl;
-            cout << "Carta azul de nieve #3" << endl;
-            cout << "Carta amarilla de agua #3" << endl;
-            cout << "" << endl;
-            cout << "" << endl;
-            cout << "Cada jugador comienza la partida con tres cartas de elementos repartidas al azar. Y podrá robar una de la pila en cada ronda. También, en cada ronda deberá jugar una para competir con la juegue su adversario. Esto quiere decir que puede recuperar la carta jugada y ganar la del adversario o bien perderla." << endl;
-            cout << "" << endl;
-            rlutil::setColor(13);
-            rlutil::locate(70,40);
-            cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
-            if (rlutil::getkey()==1)
-            {
-                rlutil::cls();
-                rlutil::setColor(13);
-                cout << "Transcurso del juego" << endl;
-                cout << "El juego comienza con la etapa denominada Etapa de desafíos. Aquí, cada uno de los dos jugadores deberá tomar una carta de la pila de cartas desafíos y guardarla." << endl;
-                cout << "Luego, comienza la etapa denominada Etapa de elementos. Esta etapa no tiene una cantidad exacta de rondas sino que finaliza cuando uno de los jugadores logra cumplir dos circunstancias de juego:" << endl;
-                cout << "Lograr lo que su carta desafío indica" << endl;
-                cout << "Obtener una combinación de elementos ganadora" << endl;
-                cout << "" << endl;
-                cout << "Al comenzar la etapa de elementos, a cada jugador se le reparten tres cartas de la pila de cartas de elementos." << endl;
-                cout << "Luego, y en cada una de las rondas de esta etapa, los jugadores roban una carta de la pila de naipes de elementos. A continuación cada jugador juega una carta de elementos de su preferencia y se determina quien gana esa ronda. Para determinar esto se siguen las siguientes reglas:" << endl;
-                cout << "El fuego vence a la nieve" << endl;
-                cout << "La nieve vence al agua" << endl;
-                cout << "El agua vence al fuego" << endl;
-                cout << "" << endl;
-                cout << "Las anteriores reglas se cumplen indistintamente del color y número que tenga el naipe. Por ejemplo, cualquier carta de fuego #1 vence a cualquier carta de nieve #5." << endl;
-                cout << "Si las cartas jugadas en la ronda son del mismo elemento, se resuelve el ganador de la ronda con el valor numérico más alto. Por ejemplo, la carta de fuego #4 vence a la carta de fuego #2." << endl;
-                cout << "Luego de determinar el ganador de la ronda, ambas cartas pasan a ser parte de la mano del jugador que ganó. Esto significa que un jugador puede llegar a tener muchas cartas en su mano si gana muchas rondas. No obstante, un jugador nunca puede tener menos de tres cartas en su mano." << endl;
-                cout << "" << endl;
-                cout << "" << endl;
-                cout << "" << endl;
-                rlutil::setColor(14);
-                rlutil::locate(70,40);
-                cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
-                if (rlutil::getkey()==1)
-                {
-                    rlutil::cls();
-                    rlutil::setColor(14);
-                    cout << "Obtener una combinación de elementos ganadora" << endl;
-                    cout << "Para obtener una combinación de elementos ganadora, un jugador debe lograr alguna de las siguientes situaciones:" << endl;
-                    cout << "Tener tres cartas de distinto elemento y distinto color." << endl;
-                    cout << "Tener tres cartas del mismo elemento." << endl;
-                    cout << "" << endl;
-                    cout << "Por ejemplo, las siguientes situaciones logran una combinación ganadora de elementos:" << endl;
-                    cout << "Nieve #2 verde" << endl;
-                    cout << "Nieve #1 azul" << endl;
-                    cout << "Agua #3 azul" << endl;
-                    cout << "Fuego #5 amarillo" << endl;
-                    cout << "Nieve #2 verde" << endl;
-                    cout << "Nieve #3 amarillo" << endl;
-                    cout << "Fuego #4 azul" << endl;
-                    cout << "Fuego #2 azul" << endl;
-                    cout << "Agua #1 rojo" << endl;
-                    cout << "Nieve #1 azul" << endl;
-                    cout << "" << endl;
-                    cout << "" << endl;
-                    cout << "Obtener una combinación de elementos ganadora, sin embargo, no es sinónimo de haber ganado la partida. Para ganar la partida es necesario también cumplir el objetivo de la carta desafío. El primer jugador en obtener una combinación de elementos ganadora y cumplir el objetivo de su carta desafío gana la partida." << endl;
-                    cout << "" << endl;
-                    cout << "Una vez finalizada la partida, se determinan los puntos de victoria de la misma. Los mismos se calculan de la siguiente manera:" << endl;
-                    cout << "" << endl;
-                    cout << "+3 PDV por haber ganado la partida" << endl;
-                    cout << "-1 PDV si el contrario obtuvo una combinación de elementos ganadora" << endl;
-                    cout << "-1 PDV si el contrario cumplió el objetivo de su carta desafío" << endl;
-                    cout << "+1 PDV por cada ronda ganada en el juego al adversario" << endl;
-                    cout << "+5 PDV por cada ronda ganada en el juego con un elemento igual al del adversario" << endl;
-                    rlutil::setColor(2);
-                    rlutil::locate(70,40);
-                    cout << "PRESIONA ENTER PARA CONTINUAR" << endl;
-                    rlutil::setColor(15);
-                    rlutil::anykey();
-                }
-            }
-        }
-    }
+rlutil::setBackgroundColor(0);
+rlutil::cls();
+
+rlutil::setColor(5);
+rlutil::locate (55,1);
+cout<<"Card Jitsu ++ "<<endl;
+rlutil::locate (40,2);
+cout<<"*************************************************"<<endl<<endl<<endl;
+rlutil::setColor(15);
+cout<<">>El objetivo general del juego es lograr una combinacion de cartas de elementos"<<endl;
+cout<<"y cumplir con la carta desafio obtenida al comienzo de la partida. El primer jugador"<<endl;
+cout<<"en cumplir ambos objetivos es quien ganara el juego."<<endl<<endl;
+
+rlutil::locate (55,30);
+cout<<"Presione una tecla para continuar";
+rlutil::anykey();
+rlutil::cls();
+
+rlutil::setColor(5);
+rlutil::locate (55,1);
+cout<<"Cartas desafio"<<endl;
+rlutil::locate (40,2);
+cout<<"*************************************************"<<endl<<endl<<endl;
+rlutil::setColor(15);
+cout<<">> En total existen diez cartas en el mazo de desafios,cada una con un desafio distinto a cumplir."<<endl;
+cout<<"A cada jugador se le asigna una de estas cartas por partida."<<endl << endl;
+cout<<"los diez desafios existentes son :"<<endl<<endl;
+
+cout<<"1 - Ganar una carta de Nieve."<<endl;
+cout<<"2 - Ganar una carta de Fuego."<<endl;
+cout<<"3 - Ganar una carta de Agua."<<endl;
+cout<<"4 - Ganar dos cartas rojas."<<endl;
+cout<<"5 - Ganar dos cartas amarillas."<<endl;
+cout<<"6 - Ganar dos cartas verdes."<<endl;
+cout<<"7 - Ganar dos cartas azules."<<endl;
+cout<<"8 - Ganar una carta con el mismo elemento que el adversario."<<endl;
+cout<<"9 - Ganar dos cartas con el mismo numero."<<endl;
+cout<<"10 - Ganar dos rondas de manera consecutiva."<<endl;
+
+rlutil::locate (55,30);
+cout<<"Presione una tecla para continuar";
+rlutil::anykey();
+rlutil::cls();
+
+rlutil::setColor(5);
+rlutil::locate (55,1);
+cout<<"Cartas de elementos"<<endl;
+rlutil::locate (40,2);
+cout<<"-------------------------------------------------"<<endl<<endl<<endl;
+rlutil::setColor(15);
+
+cout<<">> Estas cartas se caracterizan por tener un elemento (fuego, nieve o agua), un color"<<endl;
+cout<<"(rojo, amarillo, verde y azul) y un número (de 1 a 5). En total son 60 naipes."<<endl;
+cout<<"Estas cartas son necesarias para jugar en las rondas de elementos."<<endl;
+
+drawCard('1','O',40,10,'O');
+drawCard('1','E',50,10,'Z');
+drawCard('1','A',60,10,'M');
+
+rlutil::locate (55,30);
+cout<<"Presione una tecla para continuar";
+rlutil::anykey();
+rlutil::cls();
+
+rlutil::setColor(5);
+rlutil::locate (55,1);
+cout<<"Como se juega?"<<endl;
+rlutil::locate (40,2);
+cout<<"-------------------------------------------------"<<endl<<endl<<endl;
+rlutil::setColor(15);
+cout<<"-Cada uno de los dos jugadores debera tomar una carta de la pila de cartas desafios y guardarla."<<endl;
+cout<<"-Cada jugador comienza la partida con tres cartas elemento."<<endl;
+cout<<"-Cada jugador juega una carta de elementos de su preferencia y se determina quien gana esa ronda."<<endl;
+cout<<"-Un jugador nunca puede tener menos de tres cartas en su mano."<<endl;
+
+
+rlutil::locate (55,30);
+cout<<"Presione una tecla para continuar";
+rlutil::anykey();
+rlutil::cls();
+
+rlutil::setColor(5);
+rlutil::locate (50,1);
+cout<<"¿Como se gana una ronda?"<<endl;
+rlutil::locate (40,2);
+cout<<"-------------------------------------------------"<<endl<<endl<<endl;
+rlutil::setColor(15);
+cout<<">> Para determinar esto se siguen las siguientes reglas:"<<endl<<endl;
+cout<<"-El fuego vence a la nieve."<<endl;
+cout<<"-La nieve vence al agua."<<endl;
+cout<<"-El agua vence al fuego."<<endl;
+cout << endl;
+cout<<"-Si se enfrentan cartas del mismo elemento,gana la que tenga mayor numero."<<endl;
+cout<<"-Si ambos numeros son iguales la ronda se declara un empate y las cartas vuelven a sus manos"<<endl;
+
+rlutil::locate (55,30);
+cout<<"Presione una tecla para continuar";
+rlutil::anykey();
+rlutil::cls();
+
+rlutil::setColor(5);
+rlutil::locate (42,1);
+cout<<"Obtener una combinacion de elementos ganadora"<<endl;
+rlutil::locate (40,2);
+cout<<"-------------------------------------------------"<<endl<<endl<<endl;
+rlutil::setColor(15);
+cout<<">> Para obtener una combinacion de elementos ganadora, un jugador debe lograr alguna de las siguientes situaciones:"<<endl<<endl;
+cout<<"-Tener tres cartas de distinto elemento y distinto color."<<endl;
+cout<<"-Tener tres cartas del mismo elemento."<<endl;
+
+drawCard('1','O',10,10,'O');
+drawCard('1','E',20,10,'Z');
+drawCard('1','A',30,10,'M');
+
+drawCard('1','O',50,10,'O');
+drawCard('3','O',60,10,'O');
+drawCard('4','O',70,10,'M');
+
+rlutil::locate (55,30);
+cout<<"Presione una tecla para continuar";
+rlutil::anykey();
+rlutil::cls();
+rlutil::setColor(5);
+rlutil::locate (55,1);
+cout<<"Valor de los puntos"<<endl;
+rlutil::locate (40,2);
+cout<<"-------------------------------------------------"<<endl<<endl<<endl;
+rlutil::setColor(15);
+cout<<">> Una vez finalizada la partida, se determinan los puntos de victoria de la misma. Los mismos se calculan";
+cout<<"de la siguiente manera:"<<endl<<endl;
+cout<<"+3 PDV por haber ganado la partida."<<endl;
+cout<<"-1 PDV si el contrario obtuvo una combinacion de elementos ganadora."<<endl;
+cout<<"-1 PDV si el contrario cumplio el objetivo de su carta desafio."<<endl;
+cout<<"+1 PDV por cada ronda ganada en el juego al adversario."<<endl;
+cout<<"+5 PDV por cada ronda ganada en el juego con un elemento igual al del adversario."<<endl;
+rlutil::locate (40,30);
+cout<<"Presione una tecla para continuar";
+rlutil::anykey();
+rlutil::cls();
+rlutil::setColor(5);
+rlutil::locate (50,14);
+cout<<"Empecemos a jugar :)";
+rlutil::anykey();
+rlutil::setColor(rlutil::WHITE);
+
 }
 void logo (bool animado)
 {
@@ -1569,7 +1586,7 @@ void logo (bool animado)
     cout<< "**"<<std::endl;
     rlutil::locate(90, 6);
     cout<< "**"<<std::endl;
-    rlutil::setColor(rlutil::LIGHTCYAN);
+    rlutil::setColor(rlutil::WHITE);
     for (xcolumna=22; xcolumna<=105; xcolumna++)
     {
         if(animado){
