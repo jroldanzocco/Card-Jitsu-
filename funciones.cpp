@@ -1385,9 +1385,9 @@ cout<<">> Para obtener una combinacion de elementos ganadora, un jugador debe lo
 cout<<"-Tener tres cartas de distinto elemento y distinto color."<<endl;
 cout<<"-Tener tres cartas del mismo elemento."<<endl;
 
-drawCard('1','O',10,10,'O');
-drawCard('1','E',20,10,'Z');
-drawCard('1','A',30,10,'M');
+drawCard('5','O',10,10,'O');
+drawCard('2','E',20,10,'Z');
+drawCard('3','A',30,10,'M');
 
 drawCard('1','O',50,10,'O');
 drawCard('3','O',60,10,'O');
