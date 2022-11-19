@@ -1720,3 +1720,61 @@ void showItem(const char* text, int posx, int posy, bool selected)
     cout<< text << endl;
     rlutil::setBackgroundColor(0);
 }
+
+int confirmarSalir(int op)
+{
+    int y = 0;
+    rlutil::cls();
+    do
+    {
+        rlutil::setBackgroundColor(rlutil::BLACK);
+        rlutil::setColor(rlutil::DARKGREY);
+        rlutil::locate(40,12);
+        std::cout<< " SEGURO DESEA SALIR??? "<<std::endl;
+        rlutil::locate(40,13);
+        std::cout<< " NO"<<std::endl;
+        rlutil::locate(40,14 );
+        std::cout << " SI"<< std::endl;
+        rlutil::setColor(rlutil::WHITE);
+        rlutil::locate(38,13+y);
+        std::cout<<(char)175<< std::endl;
+        switch(rlutil::getkey())
+        {
+        case 14: //UP
+            rlutil::locate(38,13+y);
+            cout << " " << endl;
+            y--;
+            if(y < 0)
+            {
+                y = 1;
+            }
+            break;
+        case 15: //DOWN
+            rlutil::locate(38,13+y);
+            cout << " " << endl;
+            y++;
+            if(y > 1)
+            {
+                y = 0;
+            }
+            break;
+        case 1: //ENTER
+            switch(y+1)
+            {
+            case 1:
+                rlutil::cls();
+                return 1;
+                break;
+            case 2:
+                rlutil::cls();
+                rlutil::locate(40,13);
+                cout << "¡¡¡ GRACIAS POR JUGAR CON NOSOTROS !!!";
+                return 0;
+                break;
+            }
+        default:
+            break;
+        }
+    }
+    while(op != 0);
+}

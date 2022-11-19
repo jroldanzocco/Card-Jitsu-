@@ -81,7 +81,7 @@ int main()
                 rlutil::cls();
                 break;
             case 5:
-                op = 0;
+                op = confirmarSalir(op);
                 break;
             }
         default:
