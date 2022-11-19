@@ -3,11 +3,12 @@
 #include "rlutil.h"
 #include "funciones.h"
 using namespace std;
-void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaje[],  string nombreMaximo[])
+void partida(string nombre, int vEstadisticasMayorPuntaje[],  string nombreMaximo[])
 {
+    bool jugar = true;
     int numeroRonda=1;
     string mazo[60], manoJugador[60], manoCPU[60], cartasJugadas[2];
-    int desafioUsuario = asignarDesafio(0);
+    int desafioUsuario = 1;
     int desafioCPU = asignarDesafio(desafioUsuario);
     ///------------------
     int mayorPuntaje;
@@ -158,7 +159,7 @@ void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaj
                     ordenamientoDeManos(manoCPU);
                     ganadorElementosJugador = combinacionGanadora(manoJugador);
                     ganadorElementosCPU = combinacionGanadora(manoCPU);
-                    if(contadorDesafioUsuario[0] == true && contadorDesafioUsuario[1] == true)
+                    if(contadorDesafioUsuario[0] == true && contadorDesafioUsuario[1] == true && !ganadorDesafioJugador)
                     {
                         ganadorDesafioJugador = true;
                         vEstadisticasCPU[2]-=1;
@@ -264,7 +265,7 @@ void asignarCartas(string mazo[], string manoJugador[],string manoCPU[])
 }
 void robarCarta(string mazo[], string manoJugador[], string manoCPU[])
 {
-    /*bool banderaRobar=false;*/
+
     int repartidoPlayer = 0, repartidoCPU = 0;
     for(int i = 0; i < 60 ; i++)
     {
@@ -272,7 +273,7 @@ void robarCarta(string mazo[], string manoJugador[], string manoCPU[])
         {
             for(int j = 0; j < 60; j++)
             {
-                if(manoJugador[j] == "" && repartidoPlayer == 0 /*banderaRobar==false*/)
+                if(manoJugador[j] == "" && repartidoPlayer == 0)
                 {
                     manoJugador[j] = mazo[i];
                     rlutil::locate (5,10);
@@ -280,7 +281,7 @@ void robarCarta(string mazo[], string manoJugador[], string manoCPU[])
                     drawCard(mazo[i][0],mazo[i].back(),5,12,mazo[i][3]);
                     mazo[i] = "";
                     repartidoPlayer ++;
-                    /*banderaRobar=true;*/
+
                 }
             }
         }
@@ -526,6 +527,7 @@ void ordenamientoDeManos(string manoGeneral[])
     {
         manoGeneral[i] = auxiliar[i];
     }
+    //manoOriginal 0,1,2,58,59 ->> manoAux = 0,1,2,3,4 -->> manoOriginal ->> 0,1,2,3,4
 }
 void acomodarCartasEnPantalla(bool pos[][8], string mano[])
 {
@@ -619,15 +621,15 @@ void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsua
         {
             if (cartasJugadas[x].find("FUEGO")!=std::string::npos && cartasJugadas[x+1].find("FUEGO")!=std::string::npos)
             {
-                vEstadisticas[4]+=1;
+                vEstadisticas[4]+=5;
             }
             else if (cartasJugadas[x].find("AGUA")!=std::string::npos && cartasJugadas[x+1].find("AGUA")!=std::string::npos)
             {
-                vEstadisticas[4]+=1;
+                vEstadisticas[4]+=5;
             }
             else if (cartasJugadas[x].find("NIEVE")!=std::string::npos && cartasJugadas[x+1].find("NIEVE")!=std::string::npos)
             {
-                vEstadisticas[4]+=1;
+                vEstadisticas[4]+=5;
             }
         }
 
@@ -641,15 +643,15 @@ void ganadorDeRonda(string cartasJugadas[], string manoGanadora[], bool ganoUsua
         {
             if (cartasJugadas[x].find("FUEGO")!=std::string::npos && cartasJugadas[x+1].find("FUEGO")!=std::string::npos)
             {
-                vEstadisticas[4]+=1;
+                vEstadisticas[4]+=5;
             }
             else if (cartasJugadas[x].find("AGUA")!=std::string::npos && cartasJugadas[x+1].find("AGUA")!=std::string::npos)
             {
-                vEstadisticas[4]+=1;
+                vEstadisticas[4]+=5;
             }
             else if (cartasJugadas[x].find("NIEVE")!=std::string::npos && cartasJugadas[x+1].find("NIEVE")!=std::string::npos)
             {
-                vEstadisticas[4]+=1;
+                vEstadisticas[4]+=5;
             }
         }
     }
@@ -688,7 +690,6 @@ void victDesafioJugador(int desafio, string manoJugador[], int completarDesafioU
         }
         break;
     case 4:
-
         if(manoJugador[59][3] == 'O' && manoJugador[59] != "")
         {
             if(!completarDesafioUsuario[0])
@@ -1038,10 +1039,9 @@ bool hayTresColores(string mano[], int tam)
             contadorColorRojo+=1;
         }
     }
-    ///ME PARECE QUE LO QUE COMENTE ESTA DEMAS
-    if ((contadorColorAzul==1 && contadorColorAmarillo==1 && contadorColorRojo==1) /*|| (contadorColorAmarillo==1 && contadorColorRojo==1 &&
-            contadorColorVerde==1) || (contadorColorVerde==1 && contadorColorRojo==1 && contadorColorAzul==1) || (contadorColorVerde==1 && contadorColorAmarillo==1 &&
-                    contadorColorAzul==1)*/)
+    if ((contadorColorAzul >= 1 && contadorColorAmarillo >= 1 && contadorColorRojo >= 1) || (contadorColorAmarillo >= 1 && contadorColorRojo >= 1 &&
+            contadorColorVerde >= 1) || (contadorColorVerde >= 1 && contadorColorRojo >= 1 && contadorColorAzul >= 1) || (contadorColorVerde >= 1 && contadorColorAmarillo >= 1 &&
+                    contadorColorAzul >= 1))
     {
         return true;
     }
@@ -1303,13 +1303,13 @@ void mostrarCreditos()
     rlutil::locate(x,14);
     cout << "INTEGRANTES:" << endl;
     rlutil::locate(x,16);
-    cout << "Juan Sarmiento" << endl;
+    cout << "Juan Sarmiento - 27543" << endl;
     rlutil::locate(x,17);
-    cout << "Jeremias Roldan Zocco" << endl;
+    cout << "Jeremias Roldan Zocco - 27609" << endl;
     rlutil::locate(x,18);
-    cout << "Fiorella Acosta" << endl;
+    cout << "Fiorella Milagros Acosta - 27503" << endl;
     rlutil::locate(x,19);
-    cout << "Juan Manuel Escobar" << endl;
+    cout << "Juan Manuel Escobar - 27569" << endl;
     rlutil::anykey();
 }
 void reglamento()

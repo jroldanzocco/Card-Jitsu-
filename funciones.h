@@ -2,7 +2,7 @@
 #define AFD_H_INCLUDED
 using  namespace std;
 void logo ();
-void ronda(int nroRonda, string nombre, bool jugar, int vEstadisticasMayorPuntaje[],  string nombreMaximo[]);
+void partida(string nombre, int vEstadisticasMayorPuntaje[],  string nombreMaximo[]);
 int asignarDesafio(int desafioAnterior);
 string mostrarDesafio(int numero);
 void crearMazo(string mazo[]);

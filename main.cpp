@@ -64,7 +64,7 @@ int main()
                     confirmarNombre(nombreUsuario);
                 }
                 while(nombreUsuario == "");
-                ronda(1, nombreUsuario, jugar, vEstadisticasMayorPuntaje, nombreMaximo);
+                partida(nombreUsuario, vEstadisticasMayorPuntaje,  nombreMaximo);
                 break;
             case 2:
                 mostrarEstadisticas(vEstadisticasMayorPuntaje,nombreUsuario, nombreMaximo);
