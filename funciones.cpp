@@ -1439,7 +1439,7 @@ void reglamento()
         }
     }
 }
-void logo ()
+void logo (bool animado)
 {
     int xcolumna;
     rlutil::hidecursor();
@@ -1607,7 +1607,9 @@ void logo ()
     rlutil::setColor(rlutil::LIGHTCYAN);
     for (xcolumna=22; xcolumna<=105; xcolumna++)
     {
+        if(animado){
         rlutil::msleep(7);
+        }
         rlutil::locate (xcolumna,2);
         cout<<(char)242;
         rlutil::locate (xcolumna,8);

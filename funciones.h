@@ -1,7 +1,7 @@
 #ifndef AFD_H_INCLUDED
 #define AFD_H_INCLUDED
 using  namespace std;
-void logo ();
+void logo (bool animado);
 void partida(string nombre, int vEstadisticasMayorPuntaje[],  string nombreMaximo[]);
 int asignarDesafio(int desafioAnterior);
 string mostrarDesafio(int numero);

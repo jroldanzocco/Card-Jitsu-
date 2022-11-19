@@ -15,9 +15,10 @@ int main()
     int mayorPuntaje=0;
     bool jugar = true;
     int op = 1, y = 0;
-    logo();
+    logo(true);
     do
     {
+        logo(false);
         rlutil::setBackgroundColor(rlutil::BLACK);
         rlutil::setColor(rlutil::DARKGREY);
         rlutil::locate(40,10 );
