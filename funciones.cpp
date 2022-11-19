@@ -809,16 +809,10 @@ void victDesafioCPU(int desafio, string manoCPU[], int completarDesafioCPU[], ch
             if(!completarDesafioCPU[0])
             {
                 completarDesafioCPU[0] = true;
-                cout << "CPU GANO 1 ROJA" << endl;
-                cout << "carta: " << manoCPU[59] << endl;
-                system("pause");
             }
             else
             {
                 completarDesafioCPU[1] = true;
-                cout << "CPU GANO 2 ROJAS" << endl;
-                cout << "carta: " << manoCPU[59] << endl;
-                system("pause");
             }
         }
         break;
@@ -828,16 +822,10 @@ void victDesafioCPU(int desafio, string manoCPU[], int completarDesafioCPU[], ch
             if(!completarDesafioCPU[0])
             {
                 completarDesafioCPU[0] = true;
-                cout << "CPU GANO 1 AMARILLA" << endl;
-                cout << "carta: " << manoCPU[59] << endl;
-                system("pause");
             }
             else
             {
                 completarDesafioCPU[1] = true;
-                cout << "CPU GANO 2 AMARILLAS" << endl;
-                cout << "carta: " << manoCPU[59] << endl;
-                system("pause");
             }
         }
         break;
@@ -847,16 +835,10 @@ void victDesafioCPU(int desafio, string manoCPU[], int completarDesafioCPU[], ch
             if(!completarDesafioCPU[0])
             {
                 completarDesafioCPU[0] = true;
-                cout << "CPU GANO 1 VERDE" << endl;
-                cout << "carta: " << manoCPU[59] << endl;
-                system("pause");
             }
             else
             {
                 completarDesafioCPU[1] = true;
-                cout << "CPU GANO 2 VERDES" << endl;
-                cout << "carta: " << manoCPU[59] << endl;
-                system("pause");
             }
         }
         break;
@@ -866,16 +848,10 @@ void victDesafioCPU(int desafio, string manoCPU[], int completarDesafioCPU[], ch
             if(!completarDesafioCPU[0])
             {
                 completarDesafioCPU[0] = true;
-                cout << "CPU GANO 1 AZUL" << endl;
-                cout << "carta: " << manoCPU[59] << endl;
-                system("pause");
             }
             else
             {
                 completarDesafioCPU[1] = true;
-                cout << "CPU GANO 2 AZULES" << endl;
-                cout << "carta: " << manoCPU[59] << endl;
-                system("pause");
             }
         }
         break;
@@ -1118,15 +1094,30 @@ void mostrarGanador (bool ganadorDesafioJugador, bool ganadorDesafioCPU, bool ga
 void guardarEstadisticas(int acumulador2, int vEstadisticasMayorPuntaje[], string nombre, string nombreMaximo[])
 {
     bool bandera=false;
-    for (int i=0; i<4; i++)
+    int aux;
+    string aux2;
+    for (int i=0; i<5; i++)
     {
         if (acumulador2 > vEstadisticasMayorPuntaje[i])
         {
-            vEstadisticasMayorPuntaje[i+1] = vEstadisticasMayorPuntaje[i];
-            vEstadisticasMayorPuntaje[i] = acumulador2;
-            nombreMaximo[i+1] = nombreMaximo[i];
-            nombreMaximo[i] = nombre;
-            i=4;
+            vEstadisticasMayorPuntaje[4] = acumulador2;
+            nombreMaximo[4] = nombre;
+            i=5;
+        }
+    }
+    for (int j=0; j<5; j++)
+    {
+        for (int i=0; i<4; i++)
+        {
+            if (vEstadisticasMayorPuntaje[i]<vEstadisticasMayorPuntaje[i+1])
+            {
+                aux=vEstadisticasMayorPuntaje[i+1];
+                vEstadisticasMayorPuntaje[i+1]=vEstadisticasMayorPuntaje[i];
+                vEstadisticasMayorPuntaje[i]=aux;
+                aux2=nombreMaximo[i+1];
+                nombreMaximo[i+1]=nombreMaximo[i];
+                nombreMaximo[i]=aux2;
+            }
         }
     }
 }
