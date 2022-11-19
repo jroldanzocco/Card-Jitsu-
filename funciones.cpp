@@ -1264,13 +1264,13 @@ void mostrarCreditos()
     rlutil::locate(x,14);
     cout << "INTEGRANTES:" << endl;
     rlutil::locate(x,16);
-    cout << "Juan Sarmiento - 27543" << endl;
+    cout << "Juan Sarmiento" << endl;
     rlutil::locate(x,17);
-    cout << "Jeremias Roldan Zocco - 27609" << endl;
+    cout << "Jeremias Roldan Zocco" << endl;
     rlutil::locate(x,18);
-    cout << "Fiorella Milagros Acosta - 27503" << endl;
+    cout << "Fiorella Milagros Acosta" << endl;
     rlutil::locate(x,19);
-    cout << "Juan Manuel Escobar - 27569" << endl;
+    cout << "Juan Manuel Escobar" << endl;
     rlutil::anykey();
 }
 void reglamento()
