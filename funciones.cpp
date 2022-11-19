@@ -31,8 +31,12 @@ void partida(string nombre, int vEstadisticasMayorPuntaje[],  string nombreMaxim
     rlutil::cls();
     do
     {
-        rlutil::locate(20,1);
-        cout << "Ronda #" << numeroRonda << endl;
+        rlutil::locate(5,1);
+        cout << nombre << " VS. CPU" << endl;
+        rlutil::locate(35,1);
+        cout << "RONDA #" << numeroRonda << endl;
+        rlutil::locate(1,3);
+        cout << "---------------------------------------------" << endl;
         if(!cartaRobada)
         {
             rlutil::locate(5,5);
